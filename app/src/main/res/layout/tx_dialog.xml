@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/home_backgroud">
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+       android:layout_margin="50dp">
+       <ImageView
+           android:layout_width="match_parent"
+           android:layout_height="200dp"
+           android:src="@mipmap/tx"/>
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:text="提现成功"
+           android:textStyle="bold"
+           android:textSize="30dp"
+           android:gravity="center"/>
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:text="提现金额将在一个工作日内到账"
+           android:gravity="center"
+           android:textColor="#808080"/>
+       <Button
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:text="确认提现"
+           android:background="@drawable/but_shape"
+           android:textColor="#FFFFFF"
+           android:textSize="20dp"
+           android:id="@+id/tx_success_but"/>
+   </LinearLayout>
+
+</LinearLayout>

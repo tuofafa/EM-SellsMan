@@ -1,0 +1,16 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!--  设置边框色  -->
+    <stroke android:width="1dip" android:color="#00cc66" />
+    <!--  设置背景色  -->
+    <solid android:color="#FFFFFF"/>
+    <!--设置圆角-->
+    <!--
+        可以给每个角设置不一样的角度
+        android:topLeftRadius="25dp"
+        android:bottomLeftRadius="25dp"
+    -->
+    <corners
+        android:radius="25dp"
+        />
+</shape>

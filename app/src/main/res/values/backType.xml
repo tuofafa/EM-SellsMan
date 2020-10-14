@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="backs">
+        <item>中国工商银行</item>
+        <item>中国建设银行</item>
+        <item>中国农业银行</item>
+        <item>招商银行</item>
+        <item>中国银行</item>
+        <item>交通银行</item>
+        <item>民生银行</item>
+        <item>光大银行</item>
+        <item>中信银行</item>
+    </string-array>
+</resources>

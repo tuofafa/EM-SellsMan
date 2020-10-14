@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.em">
+    <!--  上网的权限  -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--读取SD卡的权限:打开相册选取图片所必须的权限-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".re_pwd.ResetPasswordActivity" />
+        <activity android:name=".register.RegisterActivity"/>
+        <activity android:name=".home.HomeActivity" android:label="医麦分销端" />
+        <activity android:name=".home_grzl.PersonInfoActivity"/>
+        <activity android:name=".home_tx.CashWithdrawalActivity"/>
+        <activity android:name=".home_tgsp.TGCommodityActivity"/>
+        <activity android:name=".modify.ModifyPersonActivity"/>
+        <activity android:name=".home_order.CumulativeOrderActivity"/>
+        <activity android:name=".home_customer.CumulativeCustomerActivity"/>
+        <activity android:name=".home_earning.CumulativeEarningActivity" />
+        <activity android:name=".home_tx_add.AddBankActivity"/>
+        <activity android:name=".tx_record.EarnRecordActivity"/>
+
+    </application>
+
+</manifest>

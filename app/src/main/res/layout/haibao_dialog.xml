@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:id="@+id/set_haibao"
+        android:src="@mipmap/qz_haibao"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="长按保存到相册"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textColor="#F2F2F6"
+        android:layout_marginTop="10dp"/>
+</LinearLayout>

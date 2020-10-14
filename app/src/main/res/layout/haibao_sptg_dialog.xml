@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/sptg_backgroud">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:layout_margin="110dp">
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="2"
+        android:layout_margin="110dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5">
+
+            <Button
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="130dp"
+                android:layout_gravity="center"
+                android:layout_width="300dp"
+                android:layout_height="120dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <ImageView
+                android:layout_width="258dp"
+                android:layout_height="300dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="77dp"
+                android:id="@+id/sptg_zhutu_erweima"/>
+            <ImageView
+                android:layout_marginTop="130dp"
+                android:layout_marginLeft="150dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"/>
+            <TextView
+                android:layout_marginTop="130dp"
+                android:layout_marginLeft="5dp"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:maxLines="2"
+                android:gravity="center"
+                android:text="医麦合伙人向您推荐了一个商品"
+                android:textSize="50dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="500dp"
+        android:layout_height="230dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="30dp"/>
+
+    <ImageView
+        android:id="@+id/sptg_zhutu"
+        android:layout_width="match_parent"
+        android:layout_height="1090dp"
+        android:layout_gravity="center"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="-40dp"/>
+</LinearLayout>

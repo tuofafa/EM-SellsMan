@@ -3,6 +3,7 @@ package com.em.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.em.pojo.BankEntity;
 import com.em.pojo.HomeEntity;
 import com.em.pojo.User;
 import com.google.gson.Gson;
@@ -116,6 +117,27 @@ public class SpUtils {
         sp = context.getSharedPreferences("config",Context.MODE_PRIVATE);
         String userCode = sp.getString("userCode",null);
         return userCode;
+    }
+
+
+    //保存银行卡信息
+    public static void putBankInfo(Context context, BankEntity bankEntity){
+        sp = context.getSharedPreferences("config",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(bankEntity);
+        editor.putString("bankInfo",json);
+        editor.commit();
+    }
+
+    //获取银行卡信息
+    public static BankEntity getBackInfo(Context context){
+        sp = context.getSharedPreferences("config",Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sp.getString("bankInfo","null");
+        Type type = new TypeToken<BankEntity>(){}.getType();
+        BankEntity bankEntity = gson.fromJson(json,type);
+        return bankEntity;
     }
 
 }

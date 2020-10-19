@@ -1,6 +1,7 @@
 package com.em.login;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.em.R;
 import com.em.base.BaseActivity;
+import com.em.common.Common;
 import com.em.config.URLConfig;
 import com.em.home.HomeActivity;
 import com.em.pojo.ResponseData;
@@ -56,7 +58,6 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
 
     @Override
     public void initData() {
-
     }
     @Override
     public void initListener() {
@@ -70,28 +71,29 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
         switch (view.getId()){
             //登录
             case R.id.log_button:
-                //调用登录方法
                 try {
+                    User user = new User();
                     String username = accountName.getText().toString();
                     String pwd = password.getText().toString();
-                    User user = new User();
-                    user.setAccountName(username);
-                    user.setPassword(pwd);
-                    //获取当前本模拟器的IP地址
-                    user.setIpAddress("127.0.0.1");
-                    requestLogin(user);
+                    if(username.length()>0 && pwd.length()>0){
+                        //获取当前本模拟器的IP地址
+                        user.setIpAddress("127.0.0.1");
+                        user.setAccountName(username);
+                        user.setPassword(pwd);
+                        requestLogin(user);
+                    }else {
+                        Common.showToast(LoginActivity.this,"用户名或密码为空");
+                    }
                 } catch (IOException e) {
                     Log.d(TAG, "onClick: 登录方法异常");
                     e.printStackTrace();
                 }
                 break;
             case R.id.log_wjpwd:
-                Toast.makeText(LoginActivity.this,"点击忘记密码",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
                 startActivity(intent);
                 break;
             case R.id.log_register:
-                Toast.makeText(LoginActivity.this,"点我注册",Toast.LENGTH_SHORT).show();
                 Intent register = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(register);
                 break;
@@ -116,22 +118,26 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
                 case LOGIN:
                     try {
                         String loginInfo = String.valueOf(msg.obj);
+                        Log.d(TAG, "登录信息接口返回数据===="+loginInfo);
                         ResponseData loginData = getJSON(loginInfo);
                         //判断当前用户是否是合法用户
                         if(loginData.getSuccess().equals("true")){
-
+                            //获取用户id
                             Integer uid = SpUtils.getLoginUserId(LoginActivity.this);
+                            //查询用户的邀请码
                             getUserDistributionCode(URLConfig.GRYQ_CODE+"?memberId="+uid);
+                            //跳转到主页
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
                         }else {
-                            Toast.makeText(LoginActivity.this,loginData.getMessage(),Toast.LENGTH_SHORT).show();
+                            //登录失败
+                            Common.showToast(LoginActivity.this,loginData.getMessage());
                             //清空用户名和密码，当登录失败的时候
                             accountName.setText("");
                             password.setText("");
                         }
                     } catch (JSONException e) {
-                        Log.d(TAG, "登录请求异常");
+                        Log.d(TAG, "登录请求接口返回数据为空……");
                         e.printStackTrace();
                     }
                     break;
@@ -149,7 +155,6 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
             public void run() {
                 super.run();
                     String res = NetWorkUtil.requestLoginPost(URLConfig.LoginURL,user);
-                Log.d(TAG, "登录接口返回数据"+res);
                     //新建一个Message作为传送消息的载体
                     Message message = new Message();
                     //消息代码
@@ -166,23 +171,23 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
     public ResponseData getJSON(String datas) throws JSONException {
 
         ResponseData responseData = new ResponseData();
-        User user = new User();
+
         JSONObject jsonObject = new JSONObject(datas);
-        String success = jsonObject.getString("success");
-        String data = jsonObject.getString("data");
-        String message = jsonObject.getString("message");
-        String total = jsonObject.getString("total");
+        String success = jsonObject.optString("success");
+        String data = jsonObject.optString("data");
+        String message = jsonObject.optString("message");
+        String total = jsonObject.optString("total");
         responseData.setSuccess(success);
         responseData.setMessage(message);
-        responseData.setData(data);
-        responseData.setTotal(total);
+        if(!("".equals(data)) && !("null".equals(data)) && data != null){
+            responseData.setData(data);
 
-        JSONObject object = new JSONObject(data);
-        String uid = object.getString("id");
-        Log.d(TAG, "loginUID"+uid);
-        Log.d(TAG, "responseData"+responseData.toString());
-        //保存用户信息
-        SpUtils.putLoginUserId(this,Integer.parseInt(uid));
+            JSONObject object = new JSONObject(data);
+            String uid = object.getString("id");
+            //保存用户信息
+            SpUtils.putLoginUserId(this,Integer.parseInt(uid));
+        }
+        responseData.setTotal(total);
         return responseData;
     }
 
@@ -200,6 +205,7 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
                     String saleMember = jsonObject1.optString("saleMember");
                     JSONObject object = new JSONObject(saleMember);
                     String code = object.optString("saleCode");
+
                     SpUtils.putUserCode(LoginActivity.this,code);
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.DocumentsContract;
@@ -27,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import com.em.R;
 import com.em.base.BaseActivity;
@@ -231,7 +233,6 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
             case R.id.cancel:               //取消
                 Toast.makeText(PersonInfoActivity.this,"取消",Toast.LENGTH_SHORT).show();
                 break;
-
         }
 
     }
@@ -305,6 +306,7 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
     //上传头像
     public void uploadPic(final Integer uid, final String url, final String imgPath){
         new Thread(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
                 super.run();
@@ -332,7 +334,8 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
         }.start();
     }
 
-    public String requestUploadPic(Integer uid,String url,String imgPath){
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public String requestUploadPic(Integer uid, String url, String imgPath){
         String res = NetWorkUtil.requestUploadPic(uid,url,imgPath);
         return res;
     }

@@ -3,6 +3,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -82,6 +83,9 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPersenter> 
                         Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
                         startActivity(intent);
                         destroy();
+                    }
+                    if(responseData.getSuccess().equals("false")){
+                        Common.showToast(ResetPasswordActivity.this,responseData.getMessage());
                     }
                     break;
             }

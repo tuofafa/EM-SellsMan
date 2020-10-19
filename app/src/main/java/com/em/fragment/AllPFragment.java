@@ -29,9 +29,12 @@ import com.em.R;
 import com.em.adapter.AllFragmentAdapter;
 import com.em.common.Common;
 import com.em.config.URLConfig;
+import com.em.home.HomeActivity;
 import com.em.pojo.Commodity;
 import com.em.utils.NetWorkUtil;
 import com.em.utils.QRCodeUtil;
+import com.em.utils.SavePicture;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -254,6 +257,22 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
         inflate = LayoutInflater.from(getActivity()).inflate(R.layout.erweima_sptg_dialog,null);
         qrCode = inflate.findViewById(R.id.erweima_sptg_dialog);
         qrCode.setImageBitmap(bitmap);
+
+        //二维码的长按事件
+        qrCode.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                boolean flag = SavePicture.SaveJpg((ImageView) v, getContext());
+                if(flag){
+                    Common.showToast(getContext(),"图片保存成功");
+                    //Log.d(TAG, "onLongClick: 图片保存成功");
+                }else {
+                    Common.showToast(getContext(),"图片保存失败");
+                    //Log.d(TAG, "onLongClick: 图片保存失败");
+                }
+                return false;
+            }
+        });
         //将布局设置给Dialog
         dialog.setContentView(inflate);
         //获取当前Activity所在的窗体

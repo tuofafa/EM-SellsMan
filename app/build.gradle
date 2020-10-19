@@ -39,5 +39,4 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     //悬浮组件依赖
     implementation 'com.google.android.material:material:1.2.0'
-
 }

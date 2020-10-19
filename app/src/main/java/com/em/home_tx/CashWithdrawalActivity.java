@@ -79,7 +79,6 @@ public class CashWithdrawalActivity extends BaseActivity<CashWithdrawalPersent> 
         Intent intent = getIntent();
         canEran = intent.getStringExtra("canEran");
         editCash.setText("可体现金额"+canEran+"元");
-        Log.d(TAG, "canEran: "+canEran);
 
         String url = "?memberId="+ SpUtils.getLoginUserId(CashWithdrawalActivity.this);
         requestSelectBankInfo(URLConfig.SELECT_BANK_STATUS+url);
@@ -105,12 +104,44 @@ public class CashWithdrawalActivity extends BaseActivity<CashWithdrawalPersent> 
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.cash_tj_yhk:      //设置银行卡
-                Intent backCrad = new Intent(CashWithdrawalActivity.this, AddBankActivity.class);
-                startActivity(backCrad);
+
+                BankEntity bankEntity = SpUtils.getBackInfo(CashWithdrawalActivity.this);
+                Log.d(TAG, "银行卡======"+bankEntity.toString());
+
+                //添加银行卡
+                if(bankEntity.getBankStatus().equals("1")){
+                    Intent backCrad = new Intent(CashWithdrawalActivity.this, AddBankActivity.class);
+                    backCrad.putExtra("title","添加银行卡");
+                    startActivity(backCrad);
+
+                    //银行卡审核中
+                }else if(bankEntity.getBankStatus().equals("2")){
+                    Intent editBank = new Intent(CashWithdrawalActivity.this, AddBankActivity.class);
+                    editBank.putExtra("bankentity",bankEntity);
+                    editBank.putExtra("title","修改银行卡");
+                    startActivity(editBank);
+
+                    //银行卡已通过审核
+                }else if(bankEntity.getBankStatus().equals("3")){
+                    Intent editBank = new Intent(CashWithdrawalActivity.this, AddBankActivity.class);
+                    editBank.putExtra("bankentity",bankEntity);
+                    editBank.putExtra("title","修改银行卡");
+                    startActivity(editBank);
+                    //审核失败
+                }else {
+
+                    Intent backCrad = new Intent(CashWithdrawalActivity.this, AddBankActivity.class);
+                    backCrad.putExtra("title","重新添加银行卡");
+                    startActivity(backCrad);
+                }
                 break;
+
             case R.id.cash_all:         //全部提现
-                Toast.makeText(CashWithdrawalActivity.this,"全部提现",Toast.LENGTH_SHORT).show();
-                cashMoney.setText(canEran);
+                if(Float.parseFloat(canEran)>0.0F){
+                    cashMoney.setText(canEran);
+                }else {
+                    Common.showToast(CashWithdrawalActivity.this,"当前可提现余额不足……");
+                }
                 break;
             case R.id.cash_sure:        //提交提现按钮
                 Integer uid = SpUtils.getLoginUserId(CashWithdrawalActivity.this);
@@ -149,20 +180,34 @@ public class CashWithdrawalActivity extends BaseActivity<CashWithdrawalPersent> 
                             Intent intent = new Intent(CashWithdrawalActivity.this, HomeActivity.class);
                             startActivity(intent);
                             destroy();
-
                         }else {
-
                             Common.showToast(CashWithdrawalActivity.this,mess);
                         }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+            if(msg.what == 0x88){
+               BankEntity bankEntity = (BankEntity) msg.obj;
+               SpUtils.putBankInfo(CashWithdrawalActivity.this,bankEntity);
 
+                if(bankEntity.getBankStatus().equals("1")){
+                    bankStatus.setText("请添加银行卡");
+                }else if(bankEntity.getBankStatus().equals("2")){
+                    //提交申请
+                    bankStatus.setText("正在审核中");
+                }else if(bankEntity.getBankStatus().equals("3")){
+                    //审核通过
+                    String backCode = bankEntity.getBankCode().substring(bankEntity.getBankCode().length()-6,bankEntity.getBankCode().length());
+                    bankStatus.setText("尾号为"+backCode);
+                }else {
+                    //审核失败
+                    bankStatus.setText("审核失败，请重新添加");
+                }
             }
         }
     };
-
 
     //向服务器提交提现信息
     public void requestEranInfo(final String url, final Integer uid){
@@ -187,24 +232,10 @@ public class CashWithdrawalActivity extends BaseActivity<CashWithdrawalPersent> 
                 super.run();
                 try {
                     final BankEntity bankEntity = getInitBankInfo(url);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(bankEntity.getBankStatus().equals("1")){
-                                bankStatus.setText("请添加银行卡");
-
-                            }else if(bankEntity.getBankStatus().equals("2")){
-                                //提交申请
-                                bankStatus.setText("您以添加尾号为"+6666+"的银行卡");
-                            }else if(bankEntity.getBankStatus().equals("3")){
-                                //审核通过
-                                bankStatus.setText(bankEntity.getBankName()+"6666");
-                            }else {
-                                //审核失败
-                                bankStatus.setText("审核失败，请重新添加");
-                            }
-                        }
-                    });
+                    Message bank = Message.obtain();
+                    bank.what = 0x88;
+                    bank.obj = bankEntity;
+                    handler.sendMessage(bank);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -249,7 +280,6 @@ public class CashWithdrawalActivity extends BaseActivity<CashWithdrawalPersent> 
         if(bankStatus != null && !(bankStatus.equals("null"))){
             bankEntity.setBankStatus(bankStatus);
         }
-
        return bankEntity;
     }
 

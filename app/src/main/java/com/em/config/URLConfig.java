@@ -60,8 +60,11 @@ public class URLConfig {
     //版本检测URL
     public static final String INSPECTION = "http://47.111.231.22:8003/app-version.html";
 
-    //系统更新资源路径
+    //系统更新资源路径 GET
     public static final String SYSTEM_APK = "http://47.111.184.21/app-release.apk";
+
+    //提现记录URL GET
+    public static final String TX_RECORD = "http://47.111.231.22:8003/member/app-sale-apply-money.html";
 
 
 }

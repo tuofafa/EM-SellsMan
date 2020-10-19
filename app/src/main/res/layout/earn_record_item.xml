@@ -23,13 +23,15 @@
                 android:text="2020-29-23"
                 android:textSize="20dp"
                 android:textColor="#333333"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:id="@+id/earn_date"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="13:23:89"
                 android:textColor="#999999"
-                android:layout_marginTop="3dp"/>
+                android:layout_marginTop="3dp"
+                android:id="@+id/earn_time"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
@@ -41,7 +43,8 @@
                 android:gravity="right|center"
                 android:text="￥150.00"
                 android:textColor="#06C061"
-                android:textSize="25dp"/>
+                android:textSize="25dp"
+                android:id="@+id/earn_money"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -81,7 +84,8 @@
                 android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="中国工商银行（尾号2663）"/>
+                android:text="中国工商银行"
+                android:id="@+id/earn_backinfo"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

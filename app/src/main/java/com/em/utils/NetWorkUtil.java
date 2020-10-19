@@ -1,6 +1,9 @@
 package com.em.utils;
 
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.em.pojo.User;
 
@@ -230,7 +233,8 @@ public class NetWorkUtil {
     }
 
     //上传用户头像接口
-    public static String requestUploadPic(Integer uid,String url,String imgPath){
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String requestUploadPic(Integer uid, String url, String imgPath){
         OkHttpClient client = new OkHttpClient();
         File file = new File(imgPath);
         RequestBody body = RequestBody.create(MediaType.parse("image/png"),file);

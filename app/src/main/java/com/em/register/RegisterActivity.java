@@ -10,20 +10,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
 import com.em.R;
 import com.em.base.BaseActivity;
+import com.em.common.Common;
 import com.em.config.URLConfig;
 import com.em.login.LoginActivity;
 import com.em.pojo.ResponseData;
 import com.em.pojo.User;
 import com.em.utils.NetWorkUtil;
+import com.em.utils.StringUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 
 public class RegisterActivity extends BaseActivity<RegisterPersenter> implements IRegister.P {
@@ -79,14 +78,26 @@ public class RegisterActivity extends BaseActivity<RegisterPersenter> implements
         switch (view.getId()){
             case R.id.reg_send_phonenum:  //发送验证码
                 //校验用户是否输入，输入的是否是手机号码？
-                String param = "?mob="+phoneNum.getText().toString();
-                getRequestSendMSG(param);
+                String phone1 = phoneNum.getText().toString();
+                if(phone1.length()>0){
+                    String param = "?mob="+phone1;
+                    boolean flag = StringUtils.isPhone(phone1);
+                    Log.d(TAG, "验证手机号"+flag);
+                    if(StringUtils.isPhone(phone1)){
+                        getRequestSendMSG(param);
+                    }else {
+                        Common.showToast(RegisterActivity.this,"请输入合法的手机号……");
+                    }
+
+                }else {
+                    Common.showToast(RegisterActivity.this,"手机号码不能为空，请输入手机号码……");
+                }
+
                 break;
             case R.id.reg_xieyi:          //阅读协议
                 Toast.makeText(RegisterActivity.this,"阅读协议",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.register_but:       //注册
-                //Toast.makeText(RegisterActivity.this,"注册",Toast.LENGTH_SHORT).show();
                 //校验用户输入的信息,两次密码是否一样
                 User user = new User();
                 String name = username.getText().toString();
@@ -95,14 +106,41 @@ public class RegisterActivity extends BaseActivity<RegisterPersenter> implements
                 String pwd = password.getText().toString();
                 String rePwd = rePassword.getText().toString();
 
-                user.setAccountName(name);
-                user.setPhoneNum(phone);
-                user.setPassword(pwd);
-                user.setVerificationCode(yzm);
+                //验证注册信息
+                if(yzm.length()>0 && pwd.length()>0 && rePwd.length()>0){
 
-                System.out.println(user.toString());
-                requestRegisterInfo(user);
-                break;
+                    //验证验证码是否合法
+                    if(yzm.length() == 6 && StringUtils.isNum(yzm)){
+
+                        //验证用户名是否合法
+                        if(StringUtils.isUserName(name) && name.length()>7 && name.length()<17){
+
+                          //验证密码是否合法
+                          if(StringUtils.isUserName(pwd) && pwd.length()>7 && pwd.length()<17){
+                              if(pwd.equals(rePwd)){
+                                  user.setAccountName(name);
+                                  user.setPhoneNum(phone);
+                                  user.setPassword(pwd);
+                                  user.setVerificationCode(yzm);
+
+                                  //进行注册
+                                  requestRegisterInfo(user);
+                                  break;
+                              }else {
+                                  Common.showToast(RegisterActivity.this,"两次输入密码不一致，请重新输入密码……");
+                              }
+                          }else {
+                              Common.showToast(RegisterActivity.this,"密码只能包含字母、数字和下划线组成，并且长度为8-16位");
+                          }
+                        }else {
+                            Common.showToast(RegisterActivity.this,"用户名只能包含字母、数字和下划线组成，并且长度为8-16位");
+                        }
+                    }else {
+                        Common.showToast(RegisterActivity.this,"请输入合法的验证码……");
+                    }
+                }else {
+                    Common.showToast(RegisterActivity.this,"请完善注册信息……");
+                }
         }
     }
 
@@ -127,19 +165,17 @@ public class RegisterActivity extends BaseActivity<RegisterPersenter> implements
                     break;
                 case REGISTER:
                     try {
-                        System.out.println("注册用户");
                         String registerInfo = (msg.obj).toString();
                         System.out.println(registerInfo);
                         ResponseData response = getRegisterHandle(registerInfo);
-                        System.out.println("**************"+response.toString());
+
                         if(response.getSuccess().equals("true")){
-                            Toast.makeText(RegisterActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
+                            Common.showToast(RegisterActivity.this,"注册成功……");
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(intent);
                         }else {
                             //具体是什么原因导致注册失败（手机号已被注册，验证码过期，密码长度不合格）
-                            Toast.makeText(RegisterActivity.this,"注册失败",Toast.LENGTH_SHORT).show();
-
+                            Common.showToast(RegisterActivity.this,response.getMessage());
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -176,7 +212,7 @@ public class RegisterActivity extends BaseActivity<RegisterPersenter> implements
             public void run() {
                 super.run();
                 try {
-                    System.out.println("短信验证码拼接地址"+URLConfig.sendMSG+param);
+
                     String msg = NetWorkUtil.requestSendMSG(URLConfig.sendMSG+param);
                     Message message = Message.obtain();
                     message.what = SENDMSG;

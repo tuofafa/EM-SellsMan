@@ -7,10 +7,10 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -19,8 +19,10 @@ import com.em.base.BaseActivity;
 import com.em.common.Common;
 import com.em.config.URLConfig;
 import com.em.home_tx.CashWithdrawalActivity;
+import com.em.pojo.BankEntity;
 import com.em.utils.NetWorkUtil;
 import com.em.utils.SpUtils;
+import com.em.utils.StringUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,38 +38,35 @@ import java.util.Map;
 public class AddBankActivity extends BaseActivity<AddBankaPresent> {
 
     private static final String TAG = "AddBankActivity";
-    private EditText backName;      //持卡人
+    private EditText bankName;      //持卡人
     private EditText cardID;        //身份证
-    private EditText backID;        //银行卡号
-    private Spinner backType;       //银行类型
-    private EditText backAdd;       //开户行地区
+    private EditText bankID;        //银行卡号
+    private Spinner bankType;       //银行类型
+    private EditText bankAdd;       //开户行地区
     private Button submit;     //提交按钮
+    private TextView bankTitle;  //标题
 
     @Override
     public void initView() {
-        backName = findViewById(R.id.card_name);
+        bankName = findViewById(R.id.card_name);
         cardID = findViewById(R.id.card);
-        backID = findViewById(R.id.back_card);
-        backType = findViewById(R.id.back_type);
-        backAdd = findViewById(R.id.card_add);
+        bankID = findViewById(R.id.back_card);
+        bankType = findViewById(R.id.back_type);
+        bankAdd = findViewById(R.id.card_add);
         submit = findViewById(R.id.add_card_but);
+        bankTitle = findViewById(R.id.bank_title);
 
-        //
-        backType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
+        //下拉列表事件
+        bankType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String[] backs = getResources().getStringArray(R.array.backs);
-                Common.showToast(AddBankActivity.this,"你选择的是："+backs[position]);
                 SpUtils.putBankName(AddBankActivity.this,backs[position]);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-
     }
 
     @Override
@@ -77,7 +76,24 @@ public class AddBankActivity extends BaseActivity<AddBankaPresent> {
 
     @Override
     public void initData() {
+        Intent intent = getIntent();
+        String title = intent.getStringExtra("title");
 
+        if(!(title.equals("")) && title != null){
+            if(title.equals("添加银行卡")){
+                bankTitle.setText("添加银行卡");
+            }
+            if(title.equals("修改银行卡")){
+                BankEntity bankEntity = (BankEntity) intent.getSerializableExtra("bankentity");
+                Log.d(TAG, "银行卡信息"+bankEntity.toString());
+
+                bankTitle.setText("修改银行卡");
+                bankName.setText(bankEntity.getName());
+                cardID.setText(bankEntity.getCid());
+                bankID.setText(bankEntity.getBankCode());
+                bankAdd.setText(bankEntity.getBankAdd());
+            }
+        }
     }
 
     @Override
@@ -89,32 +105,55 @@ public class AddBankActivity extends BaseActivity<AddBankaPresent> {
     public void onClick(View v) {
         Map<String,String> map = new HashMap<>();
         if(v.getId() == R.id.add_card_but){
-            Common.showToast(AddBankActivity.this,"点击了");
-            String bankName = backName.getText().toString();    //持卡人
+            String bankNames = bankName.getText().toString();    //持卡人
             String cardId = cardID.getText().toString();        //身份证
-            String bankID = backID.getText().toString();        //银行卡号
+            String bankIDs = bankID.getText().toString();        //银行卡号
             String bankType = SpUtils.getBankName(AddBankActivity.this);
             Integer uid = SpUtils.getLoginUserId(AddBankActivity.this);
-            String bankAdd = backAdd.getText().toString();
-            if(uid != null){
-                map.put("uid",uid+"");
+            String bankAdds = bankAdd.getText().toString();
+            //验证提交银行卡信息
+            if(bankName.length()>0){
+                if(cardId.length()>0){
+                    Log.d(TAG, "身份证==="+StringUtils.IDCardValidate(cardId));
+                    if(StringUtils.IDCardValidate(cardId)){
+                        if(bankIDs.length()>0){
+                            if(StringUtils.isNum(bankIDs) && bankIDs.length()>15 && bankIDs.length()<20){
+                                if(bankType != null && !(bankType.equals("")) && !(bankType.equals("null"))){
+                                    if(bankAdds.length()>0){
+                                        if(uid != null){
+                                            //提交银行卡信息
+                                            map.put("uid",uid+"");
+                                            map.put("bankName",bankNames);
+                                            map.put("cid",cardId);
+                                            map.put("bankCode",bankIDs);
+                                            map.put("bankType",bankType);
+                                            map.put("bankAdd",bankAdds);
+
+                                            requestAddBankCard(URLConfig.ADD_BACK_CRAD,map);
+                                        }else {
+                                            Log.d(TAG, "提交银行卡信息没有获取到用户id");
+                                        }
+                                    }else{
+                                        Common.showToast(AddBankActivity.this,"开户行地区不能为空……");
+                                    }
+                                }else {
+                                    Common.showToast(AddBankActivity.this,"请选择银行类型……");
+                                }
+                            }else {
+                                Common.showToast(AddBankActivity.this,"请输入正确的银行卡号……");
+                            }
+                        }else {
+                            Common.showToast(AddBankActivity.this,"银行卡号不能为空……");
+                        }
+                    }else {
+                        Common.showToast(AddBankActivity.this,"请输入合法的身份证号码……");
+                    }
+                }else {
+                    Common.showToast(AddBankActivity.this,"持卡人身份证信息不能为空……");
+                }
+            }else {
+                Common.showToast(AddBankActivity.this,"持卡人姓名不能为空……");
             }
-            if(!(bankName.equals("")) && !(bankName.equals("null")) && bankName!= null){
-                map.put("bankName",bankName);
-            }
-            if(!(cardId.equals("")) && !(cardId.equals("null")) && cardId!= null){
-                map.put("cid",cardId);
-            }
-            if(!(bankID.equals("")) && !(bankID.equals("null")) && bankID!= null){
-                map.put("bankCode",bankID);
-            }
-            if(!(bankType.equals("")) && !(bankType.equals("null")) && bankType!= null){
-                map.put("bankType",bankType);
-            }
-            if(!(bankAdd.equals("")) && !(bankAdd.equals("null")) && bankAdd!= null){
-                map.put("bankAdd",bankAdd);
-            }
-            requestAddBankCard(URLConfig.ADD_BACK_CRAD,map);
         }
     }
 
@@ -135,6 +174,7 @@ public class AddBankActivity extends BaseActivity<AddBankaPresent> {
                            destroy();
                        }else {
                            Log.d(TAG, "handleMessage: "+"银行卡添加失败");
+                           Common.showToast(AddBankActivity.this,"添加银行卡失败，请联系工作人员……");
                        }
                    }else {
                        Log.d(TAG, "handleMessage: "+"服务器端返回数据格式错误……");

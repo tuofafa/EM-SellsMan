@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -70,10 +72,15 @@ public class AllOrderFragment extends Fragment {
                    orderEntities = (List<OrderEntity>) msg.obj;
                    break;
            }
-            manager = new LinearLayoutManager(getActivity());
-            adapter = new OrderFragmentAdapter(getContext(),orderEntities);
-            orderRecycler.setAdapter(adapter);
-            orderRecycler.setLayoutManager(manager);
+           //判断当前有没有数据，没有数据就跳转到无数据页面
+           if(orderEntities.size()>0){
+               manager = new LinearLayoutManager(getActivity());
+               adapter = new OrderFragmentAdapter(getContext(),orderEntities);
+               orderRecycler.setAdapter(adapter);
+               orderRecycler.setLayoutManager(manager);
+           }else {
+               replaceFragment(new NoDataFragment());
+           }
         }
     };
 
@@ -164,5 +171,13 @@ public class AllOrderFragment extends Fragment {
             e.printStackTrace();
         }
         return list;
+    }
+
+    //动态添加碎片
+    public void replaceFragment(Fragment fragment){
+        FragmentManager manager =getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.order_frameLayout,fragment);
+        transaction.commit();
     }
 }

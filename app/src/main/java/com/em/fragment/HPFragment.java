@@ -34,6 +34,7 @@ import com.em.config.URLConfig;
 import com.em.pojo.Commodity;
 import com.em.utils.NetWorkUtil;
 import com.em.utils.QRCodeUtil;
+import com.em.utils.SavePicture;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -192,6 +193,7 @@ public class HPFragment extends Fragment implements View.OnClickListener {
                 showQRCodeDialog(productURL);
             }
         });
+
         //生成海报
         sptgHB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -268,6 +270,20 @@ public class HPFragment extends Fragment implements View.OnClickListener {
         inflate = LayoutInflater.from(getActivity()).inflate(R.layout.erweima_sptg_dialog,null);
         qrCode = inflate.findViewById(R.id.erweima_sptg_dialog);
         qrCode.setImageBitmap(bitmap);
+        qrCode.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                boolean flag = SavePicture.SaveJpg((ImageView) v, getContext());
+                if(flag){
+                    Common.showToast(getContext(),"图片保存成功");
+                    //Log.d(TAG, "onLongClick: 图片保存成功");
+                }else {
+                    Common.showToast(getContext(),"图片保存失败");
+                    //Log.d(TAG, "onLongClick: 图片保存失败");
+                }
+                return false;
+            }
+        });
         //将布局设置给Dialog
         dialog.setContentView(inflate);
         //获取当前Activity所在的窗体

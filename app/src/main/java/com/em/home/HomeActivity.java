@@ -60,7 +60,8 @@ public class HomeActivity extends BaseActivity<HomePersenter> implements IHome.V
 
     private static final String TAG = "HomeActivity";
     private View inflate;
-    private Dialog dialog;
+    private Dialog dialog,dialog2;
+
     private ImageView LJ;
     private ImageView HB;
     private TextView QX;
@@ -196,16 +197,18 @@ public class HomeActivity extends BaseActivity<HomePersenter> implements IHome.V
                 Intent homeCPTG = new Intent(HomeActivity.this, TGCommodityActivity.class);
                 startActivity(homeCPTG);
                 break;
-
             case R.id.home_qztg:        //全站推广
                 showTZTGDialog();
                 break;
             case R.id.qztg_hb:          //全站推广海报
                 hiabaoShow();
+                //打开新的弹窗，关闭原来的弹窗
+                dialog.cancel();
                 break;
             case R.id.qztg_lj:          //全站推广链接
                 setClipboard("http://h5.em616.cn");
                 Toast.makeText(HomeActivity.this, "分享链接成功", Toast.LENGTH_SHORT).show();
+                dialog.cancel();
                 break;
             case R.id.qztg_qx:
                 Toast.makeText(HomeActivity.this, "取消", Toast.LENGTH_SHORT).show();
@@ -462,7 +465,7 @@ public class HomeActivity extends BaseActivity<HomePersenter> implements IHome.V
         if (ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
         }
-        dialog = new Dialog(this, R.style.ActionSheetDialogStyle2);
+        dialog2 = new Dialog(this, R.style.ActionSheetDialogStyle2);
         //填充对话框的布局
         inflate = LayoutInflater.from(this).inflate(R.layout.haibao_dialog, null);
         //初始化控件
@@ -476,6 +479,8 @@ public class HomeActivity extends BaseActivity<HomePersenter> implements IHome.V
                 boolean flag = SavePicture.SaveJpg((ImageView) view,HomeActivity.this);
                 if(flag){
                     Common.showToast(HomeActivity.this,"图片保存成功");
+                    //图片保存成功之后，我们就让这个弹框消失
+                    dialog2.cancel();
                     //Log.d(TAG, "onLongClick: 图片保存成功");
                 }else {
                     Common.showToast(HomeActivity.this,"图片保存失败");
@@ -485,9 +490,9 @@ public class HomeActivity extends BaseActivity<HomePersenter> implements IHome.V
             }
         });
         //将布局设置给Dialog
-        dialog.setContentView(inflate);
+        dialog2.setContentView(inflate);
         //获取当前Activity所在的窗体
-        Window dialogWindow = dialog.getWindow();
+        Window dialogWindow = dialog2.getWindow();
         //设置Dialog从窗体底部弹出
         dialogWindow.setGravity(Gravity.BOTTOM);
         //获得窗体的属性
@@ -498,7 +503,7 @@ public class HomeActivity extends BaseActivity<HomePersenter> implements IHome.V
         lp.y = 350;//设置Dialog距离底部的距离
         //将属性设置给窗体
         dialogWindow.setAttributes(lp);
-        dialog.show();//显示对话框
+        dialog2.show();//显示对话框
     }
 
     //将内容复制到剪贴板

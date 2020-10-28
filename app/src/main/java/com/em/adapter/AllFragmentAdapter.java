@@ -88,7 +88,7 @@ public class AllFragmentAdapter extends RecyclerView.Adapter<AllFragmentAdapter.
             spDiscrption = itemView.findViewById(R.id.all_text);
             spPrice = itemView.findViewById(R.id.all_price);
             spFYBiLi = itemView.findViewById(R.id.all_bili);
-            spShare = itemView.findViewById(R.id.all_share);
+            spShare = itemView.findViewById(R.id.goods_click);
             sales = itemView.findViewById(R.id.all_sale);
         }
     }

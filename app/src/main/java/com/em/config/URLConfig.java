@@ -34,7 +34,9 @@ public class URLConfig {
     public static final String RESET_PWD = "http://47.111.231.22:8003/app-doforgetpassword.html";
 
     //每一个商品的URL
-    public static final String PREDUCT_URL = "http://pc.em616.cn/product/";
+    public static final String PREDUCT_URL = "http://h5.em616.cn/#/product/productdetail?id=";
+
+    public static final String TYPE_PREDUCT_URL = "http://h5.em616.cn/#/seller/sellerindexspecial?id=";
 
     //累计订单URL
     public static final String LJ_ORDER_URL = "http://47.111.231.22:8003/member/app-sale-orders.html";
@@ -67,4 +69,6 @@ public class URLConfig {
     public static final String TX_RECORD = "http://47.111.231.22:8003/member/app-sale-apply-money.html";
 
 
+    //商品详情 (GET http://47.111.231.22:8003/product/json/545.html)
+    public static final String GOODS_DETAILS = "http://47.111.231.22:8003/product/json/";
 }

@@ -37,6 +37,8 @@
         <activity android:name=".home_earning.CumulativeEarningActivity" />
         <activity android:name=".home_tx_add.AddBankActivity"/>
         <activity android:name=".tx_record.EarnRecordActivity"/>
+        <activity android:name=".goods_details.GoodsDetailsActivity"/>
+        <activity android:name=".haibao_hc.HaiBaoCompoundActivity"/>
 
     </application>
 

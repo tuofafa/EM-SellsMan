@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/all_splist"/>
+    <LinearLayout
+        android:layout_gravity="right|center"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#05BF61"
+            app:rippleColor="#46E593"
+            android:elevation="5dp"
+            app:pressedTranslationZ="15dp"
+            app:fabSize="mini"
+            app:borderWidth="0dp"
+            android:src="@mipmap/xuanfu"
+            android:id="@+id/fab_cate"
+            android:layout_marginBottom="-5dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="2dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="17dp"
+                android:textSize="10dp"
+                android:text="专题分享"
+                android:background="@drawable/xuanfu"
+                android:textColor="#FFFFFF"
+                android:gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

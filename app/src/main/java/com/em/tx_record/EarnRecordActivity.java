@@ -1,6 +1,7 @@
 package com.em.tx_record;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -18,6 +19,9 @@ import com.em.config.URLConfig;
 import com.em.pojo.EarnEntity;
 import com.em.utils.NetWorkUtil;
 import com.em.utils.SpUtils;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,34 +39,63 @@ import java.util.List;
 public class EarnRecordActivity extends BaseActivity<EarnRecordPresent> {
 
     private static final String TAG = "EarnRecordActivity";
+    private Context context = EarnRecordActivity.this;
+    private LinearLayoutManager manager;
+    private EarnRecordAdaptor adaptor;
 
-    LinearLayoutManager manager;
-    EarnRecordAdaptor adaptor;
+    private RefreshLayout refreshLayout;
+
 
     private RecyclerView recordView;
+    public static Integer page = 1;
+
     @Override
     public void initView() {
         recordView = findViewById(R.id.record_recyclerview);
+        refreshLayout = findViewById(R.id.earn_recoed_refreshLayout);
 
 
         Integer uid = SpUtils.getLoginUserId(EarnRecordActivity.this);
-        String url = URLConfig.TX_RECORD+"?memberId="+uid;
+        String url = URLConfig.TX_RECORD + "?memberId=" + uid;
 
         getRequestData(url);
 
+        //上拉事件
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            Integer uid = SpUtils.getLoginUserId(EarnRecordActivity.this);
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                String url = URLConfig.TX_RECORD + "?memberId=" + uid+"&page="+(page+1);
+                refreshlayout.finishLoadmore(1000);
+                getRequestData(url);
+                Log.d(TAG, "pageSize: "+page);
+            }
+        });
+
+        //下拉事件
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            Integer uid = SpUtils.getLoginUserId(EarnRecordActivity.this);
+            String url = URLConfig.TX_RECORD + "?memberId=" + uid;
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                page = 1;
+                refreshlayout.finishRefresh(1000);
+                getRequestData(url);
+            }
+        });
+
     }
 
-
     @SuppressLint("HandlerLeak")
-    Handler handler = new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-            if(msg.what == 0x11){
+            if (msg.what == 0x11) {
                 List<EarnEntity> earnEntities = new ArrayList<>();
                 JSONArray array = (JSONArray) msg.obj;
-                if(array.length()>0){
-                    for(int i=0;i<array.length();i++){
+                if (array.length() > 0) {
+                    for (int i = 0; i < array.length(); i++) {
                         JSONObject object = array.optJSONObject(i);
                         EarnEntity earnEntity = new EarnEntity();
 
@@ -80,33 +113,25 @@ public class EarnRecordActivity extends BaseActivity<EarnRecordPresent> {
                     adaptor = new EarnRecordAdaptor(earnEntities);
                     recordView.setLayoutManager(manager);
                     recordView.setAdapter(adaptor);
-
+                } else {
+                   Common.showToast(context,"没有数据啦……");
                 }
             }
         }
     };
 
-    public List<EarnEntity> getInitData(){
-        List<EarnEntity> earnEntities = new ArrayList<>();
-        for(int i=0;i<40;i++){
-            EarnEntity earnEntity = new EarnEntity();
-            earnEntities.add(earnEntity);
-        }
-        return earnEntities;
-    }
-
     //向服务器请求提现记录信息
-    public void getRequestData(final String url){
-        new Thread(){
+    public void getRequestData(final String url) {
+        new Thread() {
             @Override
             public void run() {
                 super.run();
                 String res = NetWorkUtil.requestGet(url);
-                if(res.length()>0){
+                if (res.length() > 0) {
                     try {
                         JSONObject jsonObject = new JSONObject(res);
                         String flag = jsonObject.optString("success");
-                        if(flag.length()>0 &&   flag.equals("true")) {
+                        if (flag.length() > 0 && flag.equals("true")) {
                             String data = jsonObject.optString("data");
                             JSONObject object = new JSONObject(data);
                             JSONArray array = object.optJSONArray("saleApplyMoneys");
@@ -120,10 +145,10 @@ public class EarnRecordActivity extends BaseActivity<EarnRecordPresent> {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }else {
-                    Common.showToast(EarnRecordActivity.this,"请检查当前网路状态……");
+                } else {
+                    Common.showToast(EarnRecordActivity.this, "请检查当前网路状态……");
                 }
-                Log.d(TAG, "提现记录信息====="+res);
+                Log.d(TAG, "提现记录信息=====" + res);
             }
         }.start();
     }

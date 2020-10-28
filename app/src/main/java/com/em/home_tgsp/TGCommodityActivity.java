@@ -114,7 +114,6 @@ public class TGCommodityActivity extends BaseActivity<TGCommodityPersent> implem
 
             }
         });
-
     }
 
     //初始化数据

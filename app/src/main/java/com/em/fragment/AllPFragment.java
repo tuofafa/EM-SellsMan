@@ -1,14 +1,22 @@
 package com.em.fragment;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -19,26 +27,38 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.em.R;
 import com.em.adapter.AllFragmentAdapter;
 import com.em.common.Common;
 import com.em.config.URLConfig;
+import com.em.goods_details.GoodsDetailsActivity;
 import com.em.home.HomeActivity;
 import com.em.pojo.Commodity;
+import com.em.pojo.User;
+import com.em.utils.CircleTransform;
 import com.em.utils.NetWorkUtil;
 import com.em.utils.QRCodeUtil;
 import com.em.utils.SavePicture;
-
+import com.em.utils.SpUtils;
+import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,35 +75,58 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
     private RecyclerView recyclerView;
 
     private View inflate;
-    private Dialog dialog;
+    private Dialog dialog,hbDialog,erCodeDialog;
+
+    //主弹窗属性
     private TextView sptgTitle;     //商品推广dialog标题
     private ImageView sptgEWM;      //商品推广dialog二维码
     private ImageView sptgHB;       //商品推广dialog海报
     private ImageView sptgLJ;       //商品推广dialog链接
     private TextView sptgQX;        //商品推广dialog取消
 
-
+    //海报弹出框
     private ImageView hbZhuTu;
     private ImageView hbZTqrCode;
+    private ImageView hbTouXiang;
+    private TextView hbProductInstruction;
+    private TextView hbProductNikeName;
+    private TextView hbProductPrice;
 
     private ImageView qrCode;
 
     private LinearLayoutManager manager;
-    private String data;
     private AllFragmentAdapter adapter;
-
-
     private Context mcontext;
+
     @Nullable
     @Override
     //这个方法加载fragment的布局文件
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.allspf_fragment,container,false);
         recyclerView = view.findViewById(R.id.all_splist);
+
+
         //向服务器请求数据
         getRequestSP();
         mcontext = getActivity();
         return view;
+    }
+
+    private void checkNeedPermissions(){
+        //6.0以上需要动态申请权限
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //多个权限一起申请
+            ActivityCompat.requestPermissions(getActivity(), new String[]{
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            }, 1);
+        }
     }
 
     //本页面事件
@@ -107,7 +150,10 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
             adapter.setAllOnItemClickListener(new AllFragmentAdapter.setAllOnItemClickListener() {
                 @Override
                 public void onClick(int position, Commodity sp) {
-                    showSptgDialog(sp);
+                    //showSptgDialog(sp);
+                    Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
+                    intent.putExtra("commodit",sp);
+                    startActivity(intent);
                 }
             });
         }
@@ -155,7 +201,7 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
         return commodityList;
     }
 
-    //全站推广Dialog
+    //全部商品Dialog
     public void showSptgDialog(final Commodity commodity){
         dialog = new Dialog(getActivity(),R.style.ActionSheetDialogStyle);
         //填充对话框的布局
@@ -173,12 +219,13 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
 
         String str1 = "分享后预计可赚<font color= \"#FF6C00\">￥ "+decimalFormat.format(sales)+"</font>";
         sptgTitle.setText(Html.fromHtml(str1));
-        final String productURL = URLConfig.PREDUCT_URL+commodity.getId()+".html";
+        final String productURL = URLConfig.PREDUCT_URL+commodity.getId();
         //生成二维码
         sptgEWM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showQRCodeDialog(productURL);
+                dialog.cancel();
             }
         });
         //生成海报
@@ -186,8 +233,9 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 Common.showToast(getContext(),"海报生成完成……");
-               /* Bitmap zhutu = QRCodeUtil.createQRCodeBitmap(productURL,500,500);
-                showSptgHBDialog(zhutu,zhutu);*/
+                Bitmap qcCode = QRCodeUtil.createQRCodeBitmap(productURL,300,300);
+                showSptgHBDialog(commodity,qcCode);
+                dialog.cancel();
             }
         });
         //生成链接
@@ -195,6 +243,8 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 setClipboard(productURL);
+                Common.showToast(getActivity(),"链接复制成功……");
+                dialog.cancel();
             }
         });
         //取消
@@ -221,38 +271,98 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
         dialog.show();//显示对话框
     }
 
-
     //生成商品海报
-    public void showSptgHBDialog(Bitmap zhutu, Bitmap Qrcode){
-        dialog = new Dialog(getActivity(),R.style.ActionSheetDialogStyle);
+    public void showSptgHBDialog(Commodity commodity, Bitmap Qrcode){
+
+        hbDialog = new Dialog(getActivity(),R.style.ActionSheetDialogStyle);
         //填充对话框的布局
-        inflate = LayoutInflater.from(getActivity()).inflate(R.layout.haibao_sptg_dialog,null);
+        inflate = LayoutInflater.from(getActivity()).inflate(R.layout.haibao_sptg_dialog,null,false);
         //初始化控件
-        hbZhuTu = inflate.findViewById(R.id.sptg_zhutu);
-        hbZTqrCode = inflate.findViewById(R.id.sptg_zhutu_erweima);
-        hbZhuTu.setImageBitmap(zhutu);
+        hbZhuTu = inflate.findViewById(R.id.product_zhutu_img);
+        hbZTqrCode = inflate.findViewById(R.id.product_qercode);
+        hbTouXiang = inflate.findViewById(R.id.product_touxiang);
+        hbProductInstruction = inflate.findViewById(R.id.product_insturctions);
+        hbProductNikeName = inflate.findViewById(R.id.product_nickname);
+        hbProductPrice = inflate.findViewById(R.id.product_price);
+
+        //定义高度和宽度
+        int height = 2040 ;
+        int width = 1080 ;
+        final View viewById = inflate.findViewById(R.id.haibao);
+
+        SavePicture.layoutView(inflate,width,height);
+
+        //商品id
+        System.out.println(commodity.getId());
+
+       // viewById.setDrawingCacheEnabled(true);
+        //viewById.buildDrawingCache(true);
+        final Bitmap bitmap = SavePicture.createBitmapFromView(inflate);
+        hbZTqrCode.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                boolean flag = SavePicture.SaveJpg((ImageView) v,getContext());
+                if(flag){
+                    Common.showToast(getContext(),"海报保存成功……");
+                }else {
+                    Common.showToast(getContext(),"海报保存失败……");
+                }
+                return false;
+            }
+        });
+
+        //设置商品主图
+        Picasso.with(getContext()).load(commodity.getMasterImg()).into(hbZhuTu);
+        //设置二维码
         hbZTqrCode.setImageBitmap(Qrcode);
+        //设置商品描述
+        hbProductInstruction.setText(commodity.getName());
+        //设置商品价格
+        hbProductPrice.setText("￥ "+commodity.getMarktPrice().toString());
+
+        User user = SpUtils.getLoginInfo(getContext());
+        if(user != null){
+            Log.d(TAG, "user"+user.toString());
+        }else {
+            Log.d(TAG, "showSptgHBDialog: user为空");
+        }
+       /* //设置用户昵称
+        if(!(user.getNickName().equals("")) && !(user.getNickName().equals("null")) && user.getNickName().length()>0){
+            hbProductNikeName.setText(user.getNickName());
+        }else {
+            hbProductNikeName.setText("医麦合伙人");
+        }
+        //设置用户头像
+        if(user.getHeadImg().length()>0 && !(user.getHeadImg().equals("")) && !(user.getHeadImg().equals("null"))){
+            Picasso.with(getContext()).load(URLConfig.TPURL+user.getHeadImg()).transform(new CircleTransform()).into(hbTouXiang);
+        }else {
+            Bitmap touxaing = BitmapFactory.decodeResource(getResources(),R.mipmap.touxiang);
+            hbTouXiang.setImageBitmap(touxaing);
+
+        }*/
+
         //将布局设置给Dialog
-        dialog.setContentView(inflate);
+        hbDialog.setContentView(inflate);
         //获取当前Activity所在的窗体
-        Window dialogWindow = dialog.getWindow();
+        Window dialogWindow = hbDialog.getWindow();
         //设置Dialog从窗体底部弹出
         dialogWindow.setGravity( Gravity.BOTTOM);
         //获得窗体的属性
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         DisplayMetrics metrics = this.getResources().getDisplayMetrics();
         //设置弹框的宽度
-        lp.width=(int)(metrics.widthPixels*0.9);
-        lp.y = 100;//设置Dialog距离底部的距离
+        lp.width=(int)(metrics.widthPixels*0.8);
+        lp.y = 400;//设置Dialog距离底部的距离
         //将属性设置给窗体
         dialogWindow.setAttributes(lp);
-        dialog.show();//显示对话框
+        hbDialog.show();//显示对话框
     }
 
     //二维码生成dialog
     public void showQRCodeDialog(String spURL){
         Bitmap bitmap = QRCodeUtil.createQRCodeBitmap(spURL,650,650);
-        dialog = new Dialog(getActivity(),R.style.ActionSheetDialogStyle);
+        erCodeDialog = new Dialog(getActivity(),R.style.ActionSheetDialogStyle);
         //填充对话框的布局
         inflate = LayoutInflater.from(getActivity()).inflate(R.layout.erweima_sptg_dialog,null);
         qrCode = inflate.findViewById(R.id.erweima_sptg_dialog);
@@ -265,6 +375,7 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
                 boolean flag = SavePicture.SaveJpg((ImageView) v, getContext());
                 if(flag){
                     Common.showToast(getContext(),"图片保存成功");
+                    erCodeDialog.cancel();
                     //Log.d(TAG, "onLongClick: 图片保存成功");
                 }else {
                     Common.showToast(getContext(),"图片保存失败");
@@ -274,9 +385,9 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
             }
         });
         //将布局设置给Dialog
-        dialog.setContentView(inflate);
+        erCodeDialog.setContentView(inflate);
         //获取当前Activity所在的窗体
-        Window dialogWindow = dialog.getWindow();
+        Window dialogWindow = erCodeDialog.getWindow();
         //设置Dialog从窗体底部弹出
         dialogWindow.setGravity( Gravity.BOTTOM);
         //获得窗体的属性
@@ -287,7 +398,7 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
         lp.y = 600;//设置Dialog距离底部的距离
         //将属性设置给窗体
         dialogWindow.setAttributes(lp);
-        dialog.show();//显示对话框
+        erCodeDialog.show();//显示对话框
     }
 
     //将内容复制到剪贴板
@@ -298,6 +409,14 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
         ClipData mClipData = ClipData.newPlainText("Label", url);
         // 将ClipData内容放到系统剪贴板里。
         cm.setPrimaryClip(mClipData);
+    }
+
+    //动态添加碎片
+    public void replaceFragment(Fragment fragment){
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        //transaction.replace(R.id,fragment);
+        transaction.commit();
     }
 
 }

@@ -1,8 +1,11 @@
 package com.em.utils;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.view.View;
+
 import androidx.annotation.ColorInt;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -87,5 +90,15 @@ public class QRCodeUtil {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    //保存某个布局为一张图片
+    public static Bitmap createViewBitmap(View v) {
+        Bitmap bitmap = Bitmap.createBitmap(v.getWidth(), v.getHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        v.draw(canvas);
+        return bitmap;
     }
 }

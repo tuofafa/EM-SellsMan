@@ -2,137 +2,143 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="@dimen/dp_100"
     android:background="@drawable/home_backgroud"
-    android:layout_margin="10dp">
+    android:layout_margin="@dimen/dp_10">
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:gravity="center">
+        android:layout_weight="1"
+        android:gravity="center|top">
         <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:id="@+id/customer_img"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
             android:src="@mipmap/touxiang"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="match_parent"
         android:layout_weight="6">
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
                 <TextView
+                    android:id="@+id/customer_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:text="北京天坛医院"
                     android:textStyle="bold"
-                    android:textSize="18dp"/>
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="#FF333333"/>
 
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="成交金额:"
-                    android:textSize="15dp"
-                    android:gravity="center"/>
+                    android:textSize="@dimen/sp_13"
+                    android:gravity="center"
+                    android:textColor="#FF999999"/>
 
                 <TextView
+                    android:id="@+id/customer_cj_money"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="4500.00元"
-                    android:textSize="15dp"
+                    android:textSize="@dimen/sp_13"
                     android:gravity="center"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="@dimen/dp_10"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="总返佣:"
-                    android:textSize="15dp"
+                    android:textSize="@dimen/sp_13"
                     android:gravity="center"
-                    android:textColor="#FF6C00"/>
+                    android:textColor="#FFFF6C00"/>
 
                 <TextView
+                    android:id="@+id/customer_fy_money"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="150.00元"
-                    android:textSize="15dp"
+                    android:textSize="@dimen/sp_13"
                     android:gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:textColor="#FF6C00"/>
             </LinearLayout>
-
         </LinearLayout>
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
-            android:layout_weight="1.3"
+            android:layout_weight="1"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="最近下单时间:"
-                    android:textSize="15dp"
+                    android:textSize="@dimen/sp_12"
                     android:gravity="center"
-                    android:textColor="#FF6C00"/>
+                    android:textColor="#FF999999"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="2020.6.16"
-                    android:textSize="15dp"
+                    android:textSize="@dimen/sp_12"
                     android:gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="#FF6C00"/>
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="#FF999999"
+                    android:id="@+id/customer_time"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="订单数量:"
-                    android:textSize="15dp"
-                    android:gravity="center"/>
+                    android:textSize="@dimen/sp_13"
+                    android:gravity="center"
+                    android:textColor="#FF999999"/>
 
                 <TextView
+                    android:id="@+id/customer_order_num"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="10单"
-                    android:textSize="15dp"
+                    android:textSize="@dimen/sp_13"
                     android:gravity="center"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="@dimen/dp_10"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
-
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
 </LinearLayout>

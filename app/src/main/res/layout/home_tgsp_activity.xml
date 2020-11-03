@@ -7,35 +7,35 @@
     android:background="#F7F8FA">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="1">
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="2">
 
         </LinearLayout>
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="9">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="推广商品"
-                android:textSize="25dp"
+                android:textSize="@dimen/sp_19"
                 android:textColor="#343434"
                 android:gravity="center"
                 android:textStyle="bold"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center">
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18"
                 android:src="@mipmap/sousuo"
                 android:id="@+id/home_tgsp_sousuo"/>
         </LinearLayout>
@@ -44,9 +44,8 @@
     <!--  商品分类布局开始 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="1">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/sp_categorize"
             android:layout_width="match_parent"
@@ -59,7 +58,7 @@
     <FrameLayout
         android:id="@+id/sp_List"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="10">
     </FrameLayout>
     <!--  商品具体内容布局结束 -->

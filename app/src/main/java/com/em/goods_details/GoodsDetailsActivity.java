@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -23,13 +24,11 @@ import com.em.base.BaseActivity;
 import com.em.common.Common;
 import com.em.config.URLConfig;
 import com.em.haibao_hc.HaiBaoCompoundActivity;
+import com.em.pic_share.GoodsPicShareActivity;
 import com.em.pojo.Commodity;
 import com.em.pojo.GoodsDetailsEntity;
-import com.em.pojo.User;
 import com.em.utils.NetWorkUtil;
-import com.em.utils.SpUtils;
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,21 +60,6 @@ public class GoodsDetailsActivity extends BaseActivity<GoodsDetailsPersent> {
 
     private Commodity commodity;
 
-
-    public List<Integer> initParam() {
-        typeList = new ArrayList<>();
-        typeList.add(2);
-        typeList.add(1);
-        typeList.add(1);
-        typeList.add(2);
-        typeList.add(2);
-        typeList.add(1);
-        typeList.add(2);
-        typeList.add(1);
-        typeList.add(2);
-        return typeList;
-    }
-
     @Override
     public void initView() {
         goodsZhuTu = findViewById(R.id.goods_img_zhutu);
@@ -87,8 +71,6 @@ public class GoodsDetailsActivity extends BaseActivity<GoodsDetailsPersent> {
         hbCompound = findViewById(R.id.goods_details_hb);
         goodsRecyclerView = findViewById(R.id.gods_details_recyclview);
         commodity = (Commodity) getIntent().getSerializableExtra("commodit");
-
-
     }
 
     @Override
@@ -105,12 +87,11 @@ public class GoodsDetailsActivity extends BaseActivity<GoodsDetailsPersent> {
             goodsName.setText(commodity.getName());
             goodsPrice.setText(commodity.getMarktPrice().toString());
             goodsBiLi.setText(commodity.getSaleScale().toString());
+
             //goodsShouYi.setText(commodit);
         }
         String url = URLConfig.GOODS_DETAILS + commodity.getId() + ".html";
         getRequestGoodsDetails(url);
-
-
     }
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
@@ -155,7 +136,9 @@ public class GoodsDetailsActivity extends BaseActivity<GoodsDetailsPersent> {
                 @Override
                 public void onItemClick(int position,String info) {
                     Common.showToast(context, "你点了" + position+"内容："+info);
-
+                    Intent shareImg = new Intent(context, GoodsPicShareActivity.class);
+                    shareImg.putExtra("imgUri",info);
+                    startActivity(shareImg);
                 }
             });
             adapter.setGoodsOnLongItemClickListener(new GoodsDetailsAdapter.setGoodsOnLongItemClickListener() {
@@ -173,7 +156,6 @@ public class GoodsDetailsActivity extends BaseActivity<GoodsDetailsPersent> {
             @Override
             public void run() {
                 super.run();
-
                 try {
                     String res = NetWorkUtil.requestGet(url);
                     Log.d(TAG, "商品信息……" + res);
@@ -187,16 +169,13 @@ public class GoodsDetailsActivity extends BaseActivity<GoodsDetailsPersent> {
                         message.obj = object;
                         message.what = 0x1212;
                         handler.sendMessage(message);
-
                     } else {
                         Common.showToast(context, "接口请求失败……");
                     }
-
                 } catch (JSONException e) {
                     Log.d(TAG, "run: 商品相信接口返回错误……");
                     e.printStackTrace();
                 }
-
             }
         }.start();
 

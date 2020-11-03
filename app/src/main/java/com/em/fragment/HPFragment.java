@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import com.em.adapter.AllFragmentAdapter;
 import com.em.common.Common;
 import com.em.config.URLConfig;
 
+import com.em.goods_details.GoodsDetailsActivity;
 import com.em.pojo.Commodity;
 import com.em.pojo.User;
 import com.em.utils.CircleTransform;
@@ -138,7 +140,9 @@ public class HPFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onClick(int position, Commodity sp) {
                     //showSptgDialog(sp);
-                    Common.showToast(getContext(),"点击了"+sp.getId());
+                    Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
+                    intent.putExtra("commodit",sp);
+                    startActivity(intent);
                 }
             });
         }
@@ -157,6 +161,7 @@ public class HPFragment extends Fragment implements View.OnClickListener {
                 handler.sendMessage(message);
             }
         }.start();
+
     }
 
     //请求数据并解析服务器返回的数据

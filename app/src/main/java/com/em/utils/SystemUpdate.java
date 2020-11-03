@@ -45,7 +45,6 @@ public class SystemUpdate {
         //下载完成向系统发送一条广播
        /* this.registerReceiver(receiver,
                 new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));*/
-
        return mTaskId;
     }
 }

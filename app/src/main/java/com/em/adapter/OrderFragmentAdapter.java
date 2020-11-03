@@ -46,7 +46,7 @@ public class OrderFragmentAdapter extends RecyclerView.Adapter<OrderFragmentAdap
         holder.orderDiscrption.setText(orderEntity.getDiscrption());
         holder.orderPrice.setText(orderEntity.getYjMoney());
         holder.orderBuyName.setText(orderEntity.getButName());
-        holder.orderBuyTime.setText(orderEntity.getBuyDate());
+        holder.orderBuyTime.setText(orderEntity.getBuyDate().substring(0,10));
 
         Picasso.with(context).load(URLConfig.TPURL+orderEntity.getImgPath()).into(holder.orderImg);
 

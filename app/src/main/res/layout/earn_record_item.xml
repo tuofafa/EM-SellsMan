@@ -2,81 +2,83 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="@dimen/dp_100"
     android:background="@drawable/home_backgroud"
-    android:layout_margin="10dp">
+    android:layout_margin="@dimen/dp_10">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="1.5"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10">
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center_vertical">
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="@dimen/dp_20"
                 android:text="2020-29-23"
-                android:textSize="20dp"
-                android:textColor="#333333"
-                android:textStyle="bold"
+                android:textSize="@dimen/sp_14"
+                android:textColor="#FF333333"
                 android:id="@+id/earn_date"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="13:23:89"
-                android:textColor="#999999"
-                android:layout_marginTop="3dp"
-                android:id="@+id/earn_time"/>
+                android:textColor="#FF999999"
+                android:layout_marginTop="@dimen/dp_3"
+                android:id="@+id/earn_time"
+                android:textSize="@dimen/sp_11"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/dp_50"
                 android:gravity="right|center"
                 android:text="￥150.00"
                 android:textColor="#06C061"
-                android:textSize="25dp"
+                android:textSize="@dimen/sp_15"
                 android:id="@+id/earn_money"/>
         </LinearLayout>
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="0.1">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/dp_1"
             android:background="#E5E5E5"/>
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="1"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10">
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="提现至"
-                android:gravity="center_vertical"/>
+                android:textColor="#FF999999"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/sp_14"/>
 
         </LinearLayout>
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="right">
@@ -85,7 +87,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="中国工商银行"
-                android:id="@+id/earn_backinfo"/>
+                android:id="@+id/earn_backinfo"
+                android:textSize="@dimen/sp_14"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

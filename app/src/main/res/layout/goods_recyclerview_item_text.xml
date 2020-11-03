@@ -3,24 +3,24 @@
     android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_margin="@dimen/dp_10">
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
         android:src="@mipmap/em_touxiang"
-        android:layout_marginLeft="5dp"/>
+        android:layout_marginLeft="@dimen/dp_5"/>
     <LinearLayout
         android:background="@drawable/home_backgroud"
-        android:layout_width="240dp"
+        android:layout_width="@dimen/dp_240"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:padding="10dp">
+        android:layout_marginLeft="@dimen/dp_10"
+        android:padding="@dimen/dp_10">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/goods_details_item_text"
             android:gravity="center_vertical"
-            android:textSize="16dp"
+            android:textSize="@dimen/sp_13"
             android:textColor="#333333"/>
     </LinearLayout>
 </LinearLayout>

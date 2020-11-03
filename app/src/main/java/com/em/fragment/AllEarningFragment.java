@@ -24,7 +24,6 @@ import com.em.utils.SpUtils;
 public class AllEarningFragment extends Fragment implements View.OnClickListener {
     private TextView allCumucativeMoney;
     private TextView allExceptEarn;
-    private LinearLayout allMenu;
 
     @Nullable
     @Override
@@ -32,23 +31,19 @@ public class AllEarningFragment extends Fragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.all_earning_item,container,false);
         allCumucativeMoney = view.findViewById(R.id.all_cumucative_money);
         allExceptEarn = view.findViewById(R.id.all_except_money);
-        allMenu = view.findViewById(R.id.all_earning_mingxi);
 
         HomeEntity homeEntity = SpUtils.getCumulativeMoney(getContext());
         if(homeEntity.getCumulativeMoney()!= null){
             allCumucativeMoney.setText(homeEntity.getCumulativeMoney().toString());
         }
         allExceptEarn.setText("预计收益"+homeEntity.getExceptMoney()+"元");
-        allMenu.setOnClickListener(this);
         return view;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.all_earning_mingxi:
-                Common.showToast(getContext(),"点击了");
-                break;
+
         }
     }
 }

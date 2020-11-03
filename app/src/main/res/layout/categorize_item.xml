@@ -7,8 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/categorize_item_id"
-        android:textSize="20dp"
-        android:textColor="#666666"
-        android:layout_margin="10dp"
+        android:textSize="@dimen/sp_15"
+        android:textColor="#FF666666"
+        android:layout_margin="@dimen/dp_10"
         android:gravity="center"/>
 </LinearLayout>

@@ -6,26 +6,26 @@
     android:background="#F7F7F7">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="6"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="0.7"
             android:background="#FFFFFF">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="提现"
                 android:gravity="center"
-                android:textColor="#333333"
-                android:textSize="25dp"
+                android:textColor="#FF333333"
+                android:textSize="@dimen/sp_18"
                 android:textStyle="bold"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/dp_0"
             android:layout_weight="0.5"
             android:orientation="vertical">
             <TextView
@@ -33,142 +33,145 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="注：合伙人赚取佣金后15日方可体现"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="@dimen/dp_15"
+                android:textSize="@dimen/sp_12"
+                android:textColor="#FF666666"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:layout_margin="15dp"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="4"
+            android:layout_margin="@dimen/dp_15"
             android:orientation="vertical"
             android:background="#FFFFFF">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="match_parent"
                     android:layout_weight="2">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="到账账户"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
+                        android:textSize="@dimen/sp_15"
                         android:gravity="center"
-                        android:textColor="#999999"/>
+                        android:textColor="#FF999999"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="match_parent"
                     android:layout_weight="4">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="right|center"
-                        android:textSize="20dp"
+                        android:textSize="@dimen/sp_15"
                         android:textColor="#333333"
                         android:id="@+id/bank_status"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:gravity="center">
                     <ImageView
                         android:layout_marginLeft="-10dp"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="@dimen/dp_15"
+                        android:layout_height="@dimen/dp_15"
                         android:src="@mipmap/xiangyou"
                         android:id="@+id/cash_tj_yhk"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="match_parent"
                     android:layout_weight="2">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="提现金额"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
+                        android:textSize="@dimen/sp_15"
                         android:gravity="center"
-                        android:textColor="#999999"/>
+                        android:textColor="#FF999999"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="match_parent"
                     android:layout_weight="4">
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
+                        android:layout_height="@dimen/dp_45"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="￥"
-                            android:textSize="30dp"
+                            android:textSize="@dimen/sp_30"
+                            android:textColor="#FF333333"
                             android:textStyle="bold"
                             android:gravity="center_vertical"/>
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@null"
-                            android:textSize="25dp"
+                            android:textSize="@dimen/sp_30"
                             android:numeric="integer"
                             android:id="@+id/cash_money"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#E5E5E5"/>
+                        android:layout_height="@dimen/dp_1"
+                        android:background="#FFE5E5E5"
+                        android:layout_marginRight="@dimen/dp_10"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="match_parent"
                     android:layout_weight="7">
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_height="match_parent"
                         android:layout_weight="3">
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:textColor="#999999"
+                            android:textColor="#FF999999"
                             android:gravity="center"
                             android:textStyle="bold"
-                            android:id="@+id/edit_cash"/>
+                            android:id="@+id/edit_cash"
+                            android:textSize="@dimen/sp_12"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_height="match_parent"
                         android:layout_weight="2">
                         <TextView
@@ -177,12 +180,12 @@
                             android:text="全部提现"
                             android:textColor="#06C061"
                             android:gravity="center"
-                            android:textStyle="bold"
-                            android:id="@+id/cash_all"/>
+                            android:id="@+id/cash_all"
+                            android:textSize="@dimen/sp_12"/>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="match_parent"
                     android:layout_weight="4">
                 </LinearLayout>
@@ -191,35 +194,47 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_15">
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/dp_44"
                     android:background="@drawable/but_shape"
                     android:text="确认提现"
-                    android:textSize="25dp"
+                    android:textSize="@dimen/sp_16"
                     android:textColor="#FFFFFF"
                     android:layout_gravity="center_vertical"
                     android:id="@+id/cash_sure"/>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="提现记录"
-                    android:gravity="center"
-                    android:textColor="#07C062"
-                    android:id="@+id/tx_jl"/>
-            </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4">
+        android:layout_height="@dimen/dp_0"
+        android:layout_weight="3.5"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="提现记录"
+                android:gravity="center"
+                android:textColor="#07C062"
+                android:id="@+id/tx_jl"
+                android:textSize="@dimen/sp_12"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="3.5">
+
+        </LinearLayout>
     </LinearLayout>
     </LinearLayout>
 </LinearLayout>

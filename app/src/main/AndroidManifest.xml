@@ -39,7 +39,7 @@
         <activity android:name=".tx_record.EarnRecordActivity"/>
         <activity android:name=".goods_details.GoodsDetailsActivity"/>
         <activity android:name=".haibao_hc.HaiBaoCompoundActivity"/>
-
+        <activity android:name=".pic_share.GoodsPicShareActivity"/>
     </application>
 
 </manifest>

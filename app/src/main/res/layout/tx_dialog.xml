@@ -8,31 +8,34 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:orientation="vertical"
-       android:layout_margin="50dp">
+       android:layout_margin="@dimen/dp_50">
        <ImageView
            android:layout_width="match_parent"
-           android:layout_height="200dp"
+           android:layout_height="@dimen/dp_200"
            android:src="@mipmap/tx"/>
        <TextView
            android:layout_width="match_parent"
-           android:layout_height="50dp"
+           android:layout_height="@dimen/dp_30"
            android:text="提现成功"
            android:textStyle="bold"
-           android:textSize="30dp"
+           android:textSize="@dimen/sp_18"
+           android:textColor="#FF000000"
            android:gravity="center"/>
        <TextView
            android:layout_width="match_parent"
-           android:layout_height="50dp"
+           android:layout_height="@dimen/dp_20"
            android:text="提现金额将在一个工作日内到账"
            android:gravity="center"
-           android:textColor="#808080"/>
+           android:textColor="#808080"
+           android:textSize="@dimen/sp_12"
+           android:layout_marginBottom="@dimen/dp_20"/>
        <Button
            android:layout_width="match_parent"
-           android:layout_height="50dp"
+           android:layout_height="@dimen/dp_44"
            android:text="确认提现"
            android:background="@drawable/but_shape"
            android:textColor="#FFFFFF"
-           android:textSize="20dp"
+           android:textSize="@dimen/sp_15"
            android:id="@+id/tx_success_but"/>
    </LinearLayout>
 

@@ -71,4 +71,7 @@ public class URLConfig {
 
     //商品详情 (GET http://47.111.231.22:8003/product/json/545.html)
     public static final String GOODS_DETAILS = "http://47.111.231.22:8003/product/json/";
+
+    //累计客户URL
+    public static final String LJ_CUSTOMER = "http://47.111.231.22:8003/member/app-sale-member1.html";
 }

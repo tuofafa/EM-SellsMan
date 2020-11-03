@@ -49,6 +49,7 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
         loginBtn = findViewById(R.id.log_button);
         passwordWJ = findViewById(R.id.log_wjpwd);
         register = findViewById(R.id.log_register);
+
     }
 
     @Override

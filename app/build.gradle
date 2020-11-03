@@ -7,8 +7,8 @@ android {
         applicationId "com.em"
         minSdkVersion 15
         targetSdkVersion 30
-        versionCode 3
-        versionName "3.0"
+        versionCode 4
+        versionName "4.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -44,3 +44,4 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.1'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.1'//如果使用了特殊的Header
 }
+

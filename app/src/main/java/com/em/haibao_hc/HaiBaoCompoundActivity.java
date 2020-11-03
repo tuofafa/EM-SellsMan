@@ -16,6 +16,7 @@ import com.em.common.Common;
 import com.em.config.URLConfig;
 import com.em.pojo.Commodity;
 import com.em.pojo.User;
+import com.em.utils.QRCodeUtil;
 import com.em.utils.SavePicture;
 import com.em.utils.SpUtils;
 import com.squareup.picasso.Picasso;
@@ -64,6 +65,10 @@ public class HaiBaoCompoundActivity extends BaseActivity<HaiBaoCompoundPersent>{
             Picasso.with(context).load(commodity.getMasterImg()).into(hbZhuTu);
             hbProductInstruction.setText(commodity.getName());
             hbProductPrice.setText(commodity.getMarktPrice().toString());
+            //商品二维码
+            String qErCode = URLConfig.PREDUCT_URL+commodity.getId();
+            Bitmap ewCode = QRCodeUtil.createQRCodeBitmap(qErCode,400,400);
+            hbZTqrCode.setImageBitmap(ewCode);
         }
         //现在返回为空
         User loginInfo = SpUtils.getLoginInfo(context);
@@ -98,7 +103,6 @@ public class HaiBaoCompoundActivity extends BaseActivity<HaiBaoCompoundPersent>{
                 Bitmap bitmap = viewAndBitmap(view);
                 Uri uri = SavePicture.saveBitmap(bitmap,context);
                 if(uri != null){
-                    Common.showToast(context,"true");
                     Intent imageIntent = new Intent(Intent.ACTION_SEND);
                     imageIntent.setType("image/*");
                     imageIntent.setPackage("com.tencent.mm");  //设置分享到固定的应用程序
@@ -114,7 +118,6 @@ public class HaiBaoCompoundActivity extends BaseActivity<HaiBaoCompoundPersent>{
                 Bitmap bitmap1 = viewAndBitmap(view);
                 Uri uri1 = SavePicture.saveBitmap(bitmap1,context);
                 if(uri1 != null){
-                    Common.showToast(context,"true");
                     Intent imageIntent = new Intent(Intent.ACTION_SEND);
                     imageIntent.setType("image/*");
                     imageIntent.putExtra(Intent.EXTRA_STREAM, uri1);

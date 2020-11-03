@@ -5,34 +5,34 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="1">
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:text="生成海报"
             android:gravity="center"
-            android:textSize="22dp"
+            android:textSize="@dimen/sp_19"
             android:textColor="#FF333333"/>
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="分享"
             android:textColor="#FF333333"
-            android:textSize="19dp"
+            android:textSize="@dimen/sp_16"
             android:gravity="center"
             android:id="@+id/share_hb"/>
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="0.01"
         android:background="#FF666666">
     </LinearLayout>
@@ -40,17 +40,17 @@
     <LinearLayout
         android:id="@+id/test"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_height="@dimen/dp_0"
+        android:layout_weight="12"
         android:background="#fff"
         android:orientation="vertical"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginBottom="150dp">
+        android:layout_marginLeft="@dimen/dp_50"
+        android:layout_marginRight="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_130"
+        android:layout_marginBottom="@dimen/dp_130">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/dp_0"
             android:layout_weight="4">
 
             <ImageView
@@ -62,56 +62,59 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
+            android:layout_height="@dimen/dp_0"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_weight="1.7"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/haibao_insturctions"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1.7"
                 android:gravity="center_vertical"
                 android:textColor="#333"
-                android:textSize="15dp" />
+                android:textSize="@dimen/sp_13"
+                android:maxLines="2"
+                android:maxEms="17"
+                android:ellipsize="end"/>
 
             <TextView
                 android:id="@+id/haibao_price"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.8"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="￥30.00"
                 android:textColor="#ff7a16"
-                android:textSize="20dp" />
+                android:textSize="@dimen/sp_16" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
+            android:layout_height="@dimen/dp_0"
+            android:layout_margin="@dimen/dp_10"
             android:layout_weight="1.5"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center">
 
                 <ImageView
                     android:id="@+id/haibao_touxiang"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp" />
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:gravity="center"
@@ -123,29 +126,28 @@
                     android:layout_height="wrap_content"
                     android:text="医麦合伙人"
                     android:textColor="#333"
-                    android:textSize="18dp" />
+                    android:textSize="@dimen/sp_15" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="为您推荐了一件商品"
                     android:textColor="#999999"
-                    android:textSize="15dp" />
+                    android:textSize="@dimen/sp_13" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="center">
 
                 <ImageView
                     android:id="@+id/haibao_qercode"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp" />
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

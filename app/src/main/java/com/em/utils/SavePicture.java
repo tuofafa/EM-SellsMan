@@ -68,6 +68,44 @@ public class SavePicture {
         return false;
     }
 
+    public static Uri SaveJpgUri(ImageView view, Context context) {
+
+        try {
+            Drawable drawable = view.getDrawable();
+            if (drawable == null) {
+                return null;
+            }
+
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+
+            Uri dataUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            Uri fileUri = view.getContext().getContentResolver().insert(dataUri, values);
+
+            // 如果保存不成功，insert没有任何错误信息，此时调用update会有错误信息提示
+//            view.getContext().getContentResolver().update(dataUri, values, "", null);
+
+            if (fileUri == null) {
+                //LogHelper.ShowLog("fileUri == null");
+                Toast.makeText(context, "null", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+
+            OutputStream outStream = view.getContext().getContentResolver().openOutputStream(fileUri);
+
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+            outStream.flush();
+            outStream.close();
+
+            view.getContext().sendBroadcast(new Intent("com.android.camera.NEW_PICTURE", fileUri));
+            return fileUri;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
 
     //将以给布局转换成一个bitmap
     public static Bitmap getLinearLayoutBitmap2(LinearLayout linearLayout, int screenWidth, int screenHeight) {
@@ -110,6 +148,30 @@ public class SavePicture {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    //保存图片到相册
+    public static boolean saveBitmap2(Bitmap bitmap, Context context) {
+        try {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+
+            Uri dataUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            Uri fileUri = context.getContentResolver().insert(dataUri, values);
+            System.out.println(""+fileUri);
+            if (fileUri == null) {
+                return false;
+            }
+            OutputStream outStream = context.getContentResolver().openOutputStream(fileUri);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+            outStream.flush();
+            outStream.close();
+            context.sendBroadcast(new Intent("com.android.camera.NEW_PICTURE", fileUri));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

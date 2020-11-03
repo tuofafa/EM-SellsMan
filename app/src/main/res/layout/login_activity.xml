@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="2">
         <LinearLayout
             android:background="@mipmap/backgroup"
@@ -13,126 +13,137 @@
             android:orientation="vertical"
             android:layout_height="match_parent">
             <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginLeft="20dp"
+                android:layout_width="@dimen/dp_64"
+                android:layout_height="@dimen/dp_64"
+                android:layout_marginTop="@dimen/dp_30"
+                android:layout_marginLeft="@dimen/dp_20"
                 android:src="@mipmap/log"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Hi~ 欢迎使用医麦合伙人端"
                 android:textColor="#FFF"
-                android:textSize="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"/>
+                android:textSize="@dimen/sp_18"
+                android:layout_marginTop="@dimen/dp_7"
+                android:layout_marginLeft="@dimen/dp_20"/>
 
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="5">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_margin="20dp">
+            android:layout_margin="@dimen/dp_20">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="用户名登录"
-                    android:textSize="20dp"
+                    android:textSize="@dimen/sp_18"
                     android:textStyle="bold"
                     android:gravity="center_vertical"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="1.2"
                 android:orientation="vertical">
               <LinearLayout
                   android:layout_width="match_parent"
-                  android:layout_height="50dp">
+                  android:layout_height="@dimen/dp_50">
+
                   <ImageView
-                      android:layout_width="20dp"
-                      android:layout_height="20dp"
+                      android:layout_width="@dimen/dp_16"
+                      android:layout_height="@dimen/dp_17"
                       android:layout_gravity="center"
-                      android:src="@mipmap/username"/>
+                      android:src="@mipmap/username" />
                   <EditText
+                      android:layout_marginLeft="@dimen/dp_9"
                       android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:hint="用户名"
                       android:id="@+id/log_username"
-                      android:background="@null"/>
+                      android:background="@null"
+                      android:textSize="@dimen/sp_15"
+                      android:textColor="#FFC2C2C2"/>
               </LinearLayout>
                 <LinearLayout
                     android:layout_marginTop="-3dp"
                     android:background="#e2e2e2"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                    android:layout_height="@dimen/dp_1"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="1.2"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/dp_5">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="@dimen/dp_50">
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_17"
                         android:src="@mipmap/pwd"
                         android:layout_gravity="center"/>
                     <EditText
+                        android:layout_marginLeft="@dimen/dp_9"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="密码"
                         android:id="@+id/log_password"
-                        android:background="@null"/>
+                        android:background="@null"
+                        android:textSize="@dimen/sp_15"
+                        android:textColor="#FFC2C2C2"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_marginTop="-3dp"
                     android:background="#e2e2e2"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                    android:layout_height="@dimen/dp_1"/>
             </LinearLayout>
             <LinearLayout
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/dp_20"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="1.2">
                 <Button
                     android:background="@drawable/but_shape"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="登  录"
-                    android:textSize="25dp"
+                    android:layout_height="@dimen/dp_44"
+                    android:text="立即登录"
+                    android:textSize="@dimen/sp_15"
                     android:textColor="#FFF"
                     android:id="@+id/log_button"/>
             </LinearLayout>
             <LinearLayout
+                android:layout_marginTop="@dimen/dp_10"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1">
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="忘记密码"
-                        android:id="@+id/log_wjpwd"/>
+                        android:id="@+id/log_wjpwd"
+                        android:textSize="@dimen/sp_10"/>
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right">
@@ -142,12 +153,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="没有账户？立即注册"
-                        android:textColor="#00cc66"/>
+                        android:textColor="#00cc66"
+                        android:textSize="@dimen/sp_10"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="2">
             </LinearLayout>
         </LinearLayout>

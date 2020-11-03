@@ -1,11 +1,9 @@
 package com.em.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.em.R;
@@ -38,6 +36,7 @@ public class EarnRecordAdaptor extends RecyclerView.Adapter<EarnRecordAdaptor.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         EarnEntity earnEntity = earnEntityList.get(position);
+        System.out.println("***********"+earnEntity.toString());
 
         //截取字符串
         String code = earnEntity.getBankCode().substring(earnEntity.getBankCode().length()-4);

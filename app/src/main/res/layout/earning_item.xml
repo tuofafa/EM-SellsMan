@@ -2,74 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="150dp">
+    android:layout_height="@dimen/dp_80">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="2.5"
         android:background="@drawable/home_backgroud"
-        android:layout_margin="10dp">
+        android:layout_margin="@dimen/dp_10">
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
-            android:orientation="vertical"
-            android:layout_marginLeft="20dp">
+            android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="1.2"
                 android:text="140.00"
                 android:gravity="center_vertical"
-                android:textSize="25dp"
+                android:textSize="@dimen/sp_16"
                 android:textStyle="bold"
                 android:textColor="#333333"
                 android:id="@+id/cumucative_money"/>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/dp_0"
                 android:layout_weight="1"
                 android:text="累计收益（元）"
                 android:gravity="center_vertical"
-                android:textSize="20dp"/>
+                android:textSize="@dimen/sp_13"/>
             <TextView
+                android:id="@+id/except_earn"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:textSize="20dp"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="0.7"
                 android:gravity="center_vertical"
-                android:id="@+id/except_earn"/>
-
+                android:textSize="@dimen/sp_13" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginRight="10dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-            <!--<LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:id="@+id/earning_mingxi">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@mipmap/xiangyou"
-                    android:layout_gravity="center"/>
-            </LinearLayout>-->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-        </LinearLayout>
-
     </LinearLayout>
 
 </LinearLayout>

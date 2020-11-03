@@ -60,7 +60,7 @@ public class HomeActivity extends BaseActivity<HomePersenter> implements IHome.V
 
     private static final String TAG = "HomeActivity";
     private View inflate;
-    private Dialog dialog,dialog2;
+    private Dialog dialog, dialog2;
 
     private ImageView LJ;
     private ImageView HB;
@@ -180,7 +180,6 @@ public class HomeActivity extends BaseActivity<HomePersenter> implements IHome.V
                 Intent customer = new Intent(HomeActivity.this, CumulativeCustomerActivity.class);
                 startActivity(customer);
                 break;
-
             case R.id.lj_order:     //累计订单
                 Intent cOrder = new Intent(HomeActivity.this, CumulativeOrderActivity.class);
                 startActivity(cOrder);
@@ -242,6 +241,7 @@ public class HomeActivity extends BaseActivity<HomePersenter> implements IHome.V
                                 Log.d(TAG, "systemCode" + SystemTools.getVersion(HomeActivity.this));
                                 long downloadId = SystemUpdate.downloadAPK(HomeActivity.this, URLConfig.SYSTEM_APK, "emaimed.apk");
                                 Log.d(TAG, "downloadId" + downloadId);
+
                             } else {
                                 Log.d(TAG, "目前是最新版本");
                             }
@@ -310,7 +310,6 @@ public class HomeActivity extends BaseActivity<HomePersenter> implements IHome.V
                         LJKHTextview.setText(homeEntity.getCumulativeUser().toString());
                         LJDDTextview.setText(homeEntity.getCumulativeOrder().toString());
                         DTXJETextview.setText(homeEntity.getCanCarryMoney().toString());
-
                         //累计金额存入Sp
                         SpUtils.putCumulativeMoney(HomeActivity.this, homeEntity);
                     }
@@ -328,7 +327,7 @@ public class HomeActivity extends BaseActivity<HomePersenter> implements IHome.V
             String data = jsonObject.optString("data");
             if (!(flag.equals("null")) && !(flag.equals("")) && flag.equals("true")) {
                 JSONObject object = new JSONObject(data);
-                Log.d(TAG, "······页面数据+===="+object);
+                Log.d(TAG, "······页面数据+====" + object);
                 Integer cumulativeOrder = object.optInt("saleOrdersCount");     //累计订单
                 Integer cumulativeUser = object.optInt("saleMembersConut");     //累计用户
                 String sy = object.optString("sumState4");                      //累计收益
@@ -463,7 +462,7 @@ public class HomeActivity extends BaseActivity<HomePersenter> implements IHome.V
     public void hiabaoShow() {
         //这一两行代码主要是向用户请求权限
         if (ActivityCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+            ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
         dialog2 = new Dialog(this, R.style.ActionSheetDialogStyle2);
         //填充对话框的布局
@@ -476,14 +475,14 @@ public class HomeActivity extends BaseActivity<HomePersenter> implements IHome.V
             public boolean onLongClick(View view) {
                 //Toast.makeText(HomeActivity.this, "长按事件", Toast.LENGTH_SHORT).show();
                 //调用保存图片的方法
-                boolean flag = SavePicture.SaveJpg((ImageView) view,HomeActivity.this);
-                if(flag){
-                    Common.showToast(HomeActivity.this,"图片保存成功");
+                boolean flag = SavePicture.SaveJpg((ImageView) view, HomeActivity.this);
+                if (flag) {
+                    Common.showToast(HomeActivity.this, "图片保存成功");
                     //图片保存成功之后，我们就让这个弹框消失
                     dialog2.cancel();
                     //Log.d(TAG, "onLongClick: 图片保存成功");
-                }else {
-                    Common.showToast(HomeActivity.this,"图片保存失败");
+                } else {
+                    Common.showToast(HomeActivity.this, "图片保存失败");
                     //Log.d(TAG, "onLongClick: 图片保存失败");
                 }
                 return false;

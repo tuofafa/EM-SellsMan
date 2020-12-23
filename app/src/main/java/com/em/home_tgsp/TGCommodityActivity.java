@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -20,7 +21,6 @@ import com.em.fragment.AllPFragment;
 import com.em.fragment.HPFragment;
 import com.em.pojo.Categorize;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class TGCommodityActivity extends BaseActivity<TGCommodityPersent> implem
 
     //商品主题分类
     private String[] categorize = {
-            "全部商品",
+            "精选商品",
             "家用商品",
             "防疫物资",
             "口腔专区",
@@ -68,7 +68,7 @@ public class TGCommodityActivity extends BaseActivity<TGCommodityPersent> implem
         //事件监听器
         adapter.setOnItemClickListener(new CategorizeResyclerviewAdapter.setOnItemClickListener(){
             @Override
-            public void onClick(int position, Categorize sp) {
+            public void onClick(int position, Categorize sp, TextView tv) {
                 String typeName;
                 switch (position){
                     case 0:

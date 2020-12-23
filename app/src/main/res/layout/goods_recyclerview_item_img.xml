@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dp_10">
+    android:layout_marginTop="@dimen/dp_20">
 
     <ImageView
-        android:layout_width="@dimen/dp_40"
-        android:layout_height="@dimen/dp_40"
-        android:src="@mipmap/em_touxiang"
-        android:layout_marginLeft="5dp"/>
+        android:layout_width="@dimen/dp_32"
+        android:layout_height="@dimen/dp_32"
+        android:src="@mipmap/em_touxiang"/>
+    <LinearLayout
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/goods_details_item_zhutu"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/touxiang"
+            android:layout_marginLeft="@dimen/dp_20"/>
+        <!---->
+    </LinearLayout>
 
-    <ImageView
-        android:layout_width="@dimen/dp_220"
-        android:layout_height="@dimen/dp_200"
-        android:id="@+id/goods_details_item_zhutu"
-        android:src="@mipmap/touxiang"
-        android:layout_marginLeft="@dimen/dp_10"/>
+    <LinearLayout
+        android:id="@+id/share_img_download"
+        android:layout_width="@dimen/dp_38"
+        android:layout_height="@dimen/dp_18"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@drawable/goods_details_tuwen"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_10"
+            android:text="下载"
+            android:textColor="#06C061"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>

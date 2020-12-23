@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFF7F8FA">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
-        android:layout_weight="1">
+        android:layout_weight="0.8">
         <TextView
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
@@ -17,12 +18,12 @@
             android:layout_weight="8"
             android:text="商品推广订单"
             android:textStyle="bold"
-            android:textSize="@dimen/sp_18"
+            android:textSize="@dimen/sp_19"
             android:gravity="center"
             android:textColor="#343434"/>
         <ImageView
             android:layout_width="@dimen/dp_0"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_19"
             android:layout_weight="2"
             android:src="@mipmap/date"
             android:layout_gravity="center_vertical"/>
@@ -30,52 +31,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
-        android:layout_weight="1">
-        <TextView
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="全部"
-            android:textSize="@dimen/sp_14"
-            android:textColor="#666666"
-            android:gravity="center"
-            android:id="@+id/all_order"/>
-        <TextView
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            android:text="预计收益"
-            android:textSize="@dimen/sp_14"
-            android:textColor="#666666"
-            android:gravity="center"
-            android:id="@+id/order_yjsy"/>
-        <TextView
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="match_parent"
-            android:layout_weight="1.2"
-            android:text="可提现"
-            android:textSize="@dimen/sp_14"
-            android:textColor="#666666"
-            android:gravity="center"
-            android:id="@+id/order_ktx"/>
-        <TextView
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="match_parent"
-            android:layout_weight="1.2"
-            android:text="提现中"
-            android:textSize="@dimen/sp_14"
-            android:textColor="#666666"
-            android:gravity="center"
-            android:id="@+id/order_txz"/>
-        <TextView
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="match_parent"
-            android:layout_weight="1.2"
-            android:text="已提现"
-            android:textSize="@dimen/sp_14"
-            android:textColor="#666666"
-            android:gravity="center"
-            android:id="@+id/order_ytx"/>
+        android:layout_weight="0.8"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20">
+       <androidx.recyclerview.widget.RecyclerView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:id="@+id/recycler_cumulative_order"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

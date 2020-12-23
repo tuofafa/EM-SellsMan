@@ -6,13 +6,22 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.em.R;
+import com.em.adapter.CumuOrderMenuItemAdapter;
 import com.em.base.BaseActivity;
 import com.em.fragment.AllOrderFragment;
 import com.em.fragment.AlreadyCarryOrderFragment;
 import com.em.fragment.CanCarryOrderFragment;
 import com.em.fragment.CarryingOrderFragment;
 import com.em.fragment.ExceptOrderFragment;
+import com.em.utils.HorizontalItemDecoration;
+import com.em.utils.ResyclerViewLayoutManger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author fafatuo
@@ -23,22 +32,31 @@ import com.em.fragment.ExceptOrderFragment;
 public class CumulativeOrderActivity extends BaseActivity<CumulativeOrderPersent> {
 
     private static final String TAG = "CumulativeOrderActivity";
+    private RecyclerView recyclerViewCumuOrderMenu;
+    private ResyclerViewLayoutManger manger;
+    private CumuOrderMenuItemAdapter adapter;
 
-    private ImageView imageDate;
-    private TextView allOrder;
-    private TextView yjsyOrder;
-    private TextView ktxOrder;
-    private TextView txzOrder;
-    private TextView ytxOrder;
 
+    private String[] dateStr = {"全部","预计收益","可提现","提现中","已提现"};
+    private List<String> dateMenu = new ArrayList<>();
+
+    public List<String> initDateMenu(String[] strings){
+        for (int i=0;i<strings.length;i++){
+            System.out.println(strings[i]);
+            dateMenu.add(strings[i]);
+        }
+        return dateMenu;
+    }
 
     @Override
     public void initView() {
-        allOrder = findViewById(R.id.all_order);
-        ktxOrder = findViewById(R.id.order_ktx);
-        txzOrder = findViewById(R.id.order_txz);
-        yjsyOrder = findViewById(R.id.order_yjsy);
-        ytxOrder = findViewById(R.id.order_ytx);
+        recyclerViewCumuOrderMenu = findViewById(R.id.recycler_cumulative_order);
+
+        manger = new ResyclerViewLayoutManger(this);
+        manger.setOrientation(LinearLayoutManager.HORIZONTAL);
+        manger.setmScrollHorizontally(false);
+        List<String> list = initDateMenu(dateStr);
+        adapter = new CumuOrderMenuItemAdapter(list);
     }
 
     @Override
@@ -49,45 +67,50 @@ public class CumulativeOrderActivity extends BaseActivity<CumulativeOrderPersent
     @Override
     public void initData() {
         replaceFragment(new AllOrderFragment());
+
+        recyclerViewCumuOrderMenu.setLayoutManager(manger);
+        recyclerViewCumuOrderMenu.setAdapter(adapter);
+        recyclerViewCumuOrderMenu.addItemDecoration(new HorizontalItemDecoration(18,this));
+        adapter.setOnItemClickListener(new CumuOrderMenuItemAdapter.setOnItemClickMenu() {
+            @Override
+            public void onClick(int position, String dateMu) {
+               switch (position){
+                   case 0:
+                       replaceFragment(new AllOrderFragment());
+                       break;
+                   case 1:
+                        replaceFragment(new ExceptOrderFragment());
+                        break;
+                   case 2:
+                       replaceFragment(new CanCarryOrderFragment());
+                       break;
+                   case 3:
+                       replaceFragment(new CarryingOrderFragment());
+                       break;
+                   case 4:
+                       replaceFragment(new AlreadyCarryOrderFragment());
+                       break;
+               }
+            }
+        });
+
     }
 
     @Override
     public void initListener() {
-        allOrder.setOnClickListener(this);
-        ktxOrder.setOnClickListener(this);
-        ytxOrder.setOnClickListener(this);
-        yjsyOrder.setOnClickListener(this);
-        txzOrder.setOnClickListener(this);
+
     }
 
     @Override
     public void destroy() {
-
     }
-
     @Override
     public CumulativeOrderPersent getmPersenterInstance() {
         return new CumulativeOrderPersent();
     }
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.all_order:        //全部
-                replaceFragment(new AllOrderFragment());
-                break;
-            case R.id.order_yjsy:       //预计收益
-                replaceFragment(new ExceptOrderFragment());
-                break;
-            case R.id.order_ktx:        //可提现
-                replaceFragment(new CanCarryOrderFragment());
-                break;
-            case R.id.order_txz:        //提现中
-                replaceFragment(new CarryingOrderFragment());
-                break;
-            case R.id.order_ytx:        //已提现
-                replaceFragment(new AlreadyCarryOrderFragment());
-                break;
-        }
+
     }
 
     //动态添加碎片

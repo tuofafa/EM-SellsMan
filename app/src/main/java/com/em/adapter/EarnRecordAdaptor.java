@@ -44,7 +44,7 @@ public class EarnRecordAdaptor extends RecyclerView.Adapter<EarnRecordAdaptor.Vi
 
         //数据绑定
         holder.earnDate.setText(strings[0]);
-        holder.earnMoney.setText(earnEntity.getMoney());
+        holder.earnMoney.setText("￥"+earnEntity.getMoney());
         holder.earnTime.setText(strings[1]);
         holder.earnBankInfo.setText(earnEntity.getBankType()+"(尾号"+code+")");
 

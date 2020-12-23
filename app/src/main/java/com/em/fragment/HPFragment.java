@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +36,7 @@ import com.em.common.Common;
 import com.em.config.URLConfig;
 
 import com.em.goods_details.GoodsDetailsActivity;
+import com.em.home_qztg.TGShareActivity;
 import com.em.pojo.Commodity;
 import com.em.pojo.User;
 import com.em.utils.CircleTransform;
@@ -71,21 +74,16 @@ public class HPFragment extends Fragment implements View.OnClickListener {
     private ImageView sptgHB;       //商品推广dialog海报
     private ImageView sptgLJ;       //商品推广dialog链接
     private TextView sptgQX;        //商品推广dialog取消
-
-
     private ImageView hbZhuTu;
     private ImageView hbZTqrCode;
     private ImageView hbTouXiang;
     private TextView hbProductInstruction;
     private TextView hbProductNikeName;
     private TextView hbProductPrice;
-
     private ImageView qrCode;
-
     private LinearLayoutManager manager;
     private String data;
     private AllFragmentAdapter adapter;
-
     private FloatingActionButton actionButton;  //专题分享
     private Context mcontext;
     private Integer spType ;    //商品分类
@@ -117,9 +115,11 @@ public class HPFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.fab_cate:
-                //Common.showToast(getContext(),"点击了"+spType);
-                Log.d(TAG, "悬浮按钮点击"+URLConfig.TYPE_PREDUCT_URL+spType);
-                showZhuanTiDialog(URLConfig.TYPE_PREDUCT_URL+spType);
+                String url = URLConfig.TYPE_PREDUCT_URL+spType+"&sc="+SpUtils.getUserCode(getContext());
+                Intent ZTSHare = new Intent(getContext(), TGShareActivity.class);
+                ZTSHare.putExtra("type",spType+"");
+                ZTSHare.putExtra("url",url);
+                startActivity(ZTSHare);
                 break;
         }
     }
@@ -131,6 +131,15 @@ public class HPFragment extends Fragment implements View.OnClickListener {
             if(msg.what == 0x11){
                 commodityList = (List<Commodity>) msg.obj;
             }
+
+            //去掉999999.0 可询价
+            for(int i=0;i<commodityList.size();i++){
+                if(commodityList.get(i).getMarktPrice().toString().equals("999999.0")){
+                    commodityList.remove(commodityList.get(i));
+                    i--;
+                }
+            }
+
             manager = new LinearLayoutManager(getActivity());
             adapter = new AllFragmentAdapter(getContext(),commodityList);
             recyclerView.setLayoutManager(manager);
@@ -139,7 +148,7 @@ public class HPFragment extends Fragment implements View.OnClickListener {
             adapter.setAllOnItemClickListener(new AllFragmentAdapter.setAllOnItemClickListener() {
                 @Override
                 public void onClick(int position, Commodity sp) {
-                    //showSptgDialog(sp);
+
                     Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
                     intent.putExtra("commodit",sp);
                     startActivity(intent);
@@ -151,6 +160,7 @@ public class HPFragment extends Fragment implements View.OnClickListener {
     //向服务器请求数据发送到Handler中
     public void getRequestSP(final Integer spType){
         new Thread(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
                 super.run();
@@ -165,6 +175,7 @@ public class HPFragment extends Fragment implements View.OnClickListener {
     }
 
     //请求数据并解析服务器返回的数据
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public List<Commodity> initData(Integer spTypeName){
         List<Commodity> commodityList = new ArrayList<>();
         final String url = URLConfig.SPURL+spTypeName+".html";

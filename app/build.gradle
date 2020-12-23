@@ -5,11 +5,20 @@ android {
     buildToolsVersion "30.0.2"
     defaultConfig {
         applicationId "com.em"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 30
-        versionCode 4
-        versionName "4.0"
+        versionCode 5
+        versionName "5.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    lintOptions{
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
@@ -37,11 +46,35 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     //加载在线图片
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    implementation 'jp.wasabeef:picasso-transformations:2.1.2'
+    //GPU Filters
+    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     //悬浮组件依赖
     implementation 'com.google.android.material:material:1.2.0'
 
     //下拉刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.1'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.1'//如果使用了特殊的Header
-}
 
+    //控件阴影SCardView
+    implementation 'io.github.meetsl:SCardView:1.1'
+
+    //tablayout
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:23.4.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:support-v4:29.0.2'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:29.0.2'
+
+    //图片轮播框架
+    implementation 'com.youth.banner:banner:1.4.10'
+    //glide
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+
+    //图片选择器
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.8'
+
+    implementation 'com.android.support:multidex:1.0.3'
+}

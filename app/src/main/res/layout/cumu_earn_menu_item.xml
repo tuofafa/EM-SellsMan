@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+    <TextView
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_30"
+        android:gravity="center"
+        android:textSize="@dimen/sp_16"
+        android:id="@+id/all1_earning"
+        android:textColor="@drawable/text_bg"
+        tools:ignore="Suspicious0dp" />
+
+    <TextView
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_3"
+        android:background="#F7F8FA"
+        android:id="@+id/item_earn"/>
+
+</LinearLayout>

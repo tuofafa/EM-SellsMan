@@ -11,6 +11,15 @@ public class User {
     private String headImg;             //用户头像
     private String weChat;              //微信号
     private String nickName;            //昵称
+    private Integer smsUID;
+
+    public Integer getSmsUID() {
+        return smsUID;
+    }
+
+    public void setSmsUID(Integer smsUID) {
+        this.smsUID = smsUID;
+    }
 
     public Integer getAccountId() {
         return accountId;

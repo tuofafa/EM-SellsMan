@@ -3,10 +3,18 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="50dp">
+    android:layout_margin="@dimen/dp_50"
+    android:gravity="center">
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="@dimen/dp_200"
         android:src="@mipmap/nodata"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="暂无内容"
+        android:textSize="@dimen/sp_14"
+        android:textColor="#FF999999"
+        android:layout_marginTop="-45dp"/>
 
 </LinearLayout>

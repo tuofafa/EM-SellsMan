@@ -1,6 +1,7 @@
 package com.em.fragment;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -44,6 +46,7 @@ public class ExceptOrderFragment extends Fragment {
 
     private LinearLayoutManager manager;
     private OrderFragmentAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,7 +60,6 @@ public class ExceptOrderFragment extends Fragment {
         }
         return view;
     }
-
 
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler(){
@@ -97,9 +99,11 @@ public class ExceptOrderFragment extends Fragment {
     }
 
     //请求服务器数据
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public List<OrderEntity> initData(String url){
         List<OrderEntity> list = new ArrayList<>();
         String res = NetWorkUtil.requestGet(URLConfig.LJ_ORDER_URL +url);
+        Log.d(TAG, "累计订单"+res);
         if(res.equals(null) || res.equals("") || res.equals("null")){
             Log.d(TAG, "initData: "+"服务器返回数据异常");
             Common.showToast(getContext(),"服务器请求异常，请检查当前网络是否流畅……");
@@ -116,7 +120,7 @@ public class ExceptOrderFragment extends Fragment {
                     for(int i=0;i<array.length();i++){
                         OrderEntity order = new OrderEntity();
                         JSONObject object1 = array.getJSONObject(i);
-                        String actMoney = object1.optString("actMoney");    //佣金金额
+                        String actMoney = object1.optString("saleMoney");    //佣金金额
                         String buyName = object1.optString("buyName");      //购买客户
                         String orderTime = object1.optString("orderTime");  //购买时间
                         String productName = object1.optString("productName");  //购买产品

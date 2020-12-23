@@ -15,7 +15,7 @@ public class URLConfig {
     //注册访问的接口URL
     public static final String RegisterURL = "http://47.111.231.22:8003/app-doregister.html";
 
-    //分类查询商品URL
+    //分类查询商品URL http://47.111.231.22:8003/scene/96.html
     public static final String SPURL = "http://47.111.231.22:8003/scene/";
 
     //所有商品URL
@@ -34,9 +34,9 @@ public class URLConfig {
     public static final String RESET_PWD = "http://47.111.231.22:8003/app-doforgetpassword.html";
 
     //每一个商品的URL
-    public static final String PREDUCT_URL = "http://h5.em616.cn/#/product/productdetail?id=";
+    public static final String PREDUCT_URL = "http://m.emaimed.com/#/product/productdetail?id=";
 
-    public static final String TYPE_PREDUCT_URL = "http://h5.em616.cn/#/seller/sellerindexspecial?id=";
+    public static final String TYPE_PREDUCT_URL = "http://m.emaimed.com/#/seller/sellerindexspecial?id=";
 
     //累计订单URL
     public static final String LJ_ORDER_URL = "http://47.111.231.22:8003/member/app-sale-orders.html";
@@ -75,3 +75,4 @@ public class URLConfig {
     //累计客户URL
     public static final String LJ_CUSTOMER = "http://47.111.231.22:8003/member/app-sale-member1.html";
 }
+

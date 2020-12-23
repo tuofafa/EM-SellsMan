@@ -4,21 +4,41 @@
     package="com.em">
     <!--  上网的权限  -->
     <uses-permission android:name="android.permission.INTERNET"/>
+
     <!--读取SD卡的权限:打开相册选取图片所必须的权限-->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <!--外部存储的写权限-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/p2"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/p2"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        tools:replace="android:icon, android:theme"
         tools:ignore="GoogleAppIndexingWarning">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.em.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <!--元数据-->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,6 +60,12 @@
         <activity android:name=".goods_details.GoodsDetailsActivity"/>
         <activity android:name=".haibao_hc.HaiBaoCompoundActivity"/>
         <activity android:name=".pic_share.GoodsPicShareActivity"/>
+        <activity android:name=".app_update.AppUpdate"/>
+        <activity android:name=".protocol.RegisterProtocol"/>
+        <activity android:name=".home_qztg.TGShareActivity"/>
+        <activity android:name=".home_zhgl.AccountMangerActivity"/>
+        <activity android:name=".main.MainAPP"/>
+        <activity android:name=".home_frg_menu.MenuActivity"/>
+        <activity android:name=".home_frg_menu.MenuItemContentActivity"/>
     </application>
-
 </manifest>

@@ -1,26 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dp_10">
+    android:layout_marginTop="@dimen/dp_20"
+    android:orientation="horizontal">
+
     <ImageView
-        android:layout_width="@dimen/dp_40"
-        android:layout_height="@dimen/dp_40"
-        android:src="@mipmap/em_touxiang"
-        android:layout_marginLeft="@dimen/dp_5"/>
+        android:layout_width="@dimen/dp_32"
+        android:layout_height="@dimen/dp_32"
+        android:src="@mipmap/em_touxiang"/>
+
     <LinearLayout
+        android:layout_width="@dimen/dp_166"
+        android:layout_height="@dimen/dp_345"
         android:background="@drawable/home_backgroud"
-        android:layout_width="@dimen/dp_240"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:padding="@dimen/dp_10">
-        <TextView
+        android:padding="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_20">
+
+        <WebView
+            android:id="@+id/goods_details_item_webview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/goods_details_item_text"
+            android:layout_height="@dimen/dp_345"
             android:gravity="center_vertical"
+            android:textColor="#333333"
             android:textSize="@dimen/sp_13"
-            android:textColor="#333333"/>
+            tools:ignore="WebViewLayout"/>
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/share_text_copy"
+        android:layout_width="@dimen/dp_38"
+        android:layout_height="@dimen/dp_18"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@drawable/goods_details_tuwen"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_10"
+            android:text="复制"
+            android:textColor="#06C061"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
 </LinearLayout>

@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,6 +34,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -142,15 +144,21 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
             if(msg.what == 0x11){
                 commodityList = (List<Commodity>) msg.obj;
             }
+            //去掉999999.0 可询价
+            for(int i=0;i<commodityList.size();i++){
+                if(commodityList.get(i).getMarktPrice().toString().equals("999999.0")){
+                   commodityList.remove(commodityList.get(i));
+                   i--;
+                }
+            }
             manager = new LinearLayoutManager(getActivity());
             adapter = new AllFragmentAdapter(getContext(),commodityList);
             recyclerView.setLayoutManager(manager);
             recyclerView.setAdapter(adapter);
-            final List<Commodity> finalCommodityList = commodityList;
             adapter.setAllOnItemClickListener(new AllFragmentAdapter.setAllOnItemClickListener() {
                 @Override
                 public void onClick(int position, Commodity sp) {
-                    //showSptgDialog(sp);
+
                     Intent intent = new Intent(getContext(), GoodsDetailsActivity.class);
                     intent.putExtra("commodit",sp);
                     startActivity(intent);
@@ -162,6 +170,7 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
     //向服务器请求数据发送到Handler中
     public void getRequestSP(){
         new Thread(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
                 super.run();
@@ -175,6 +184,7 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
     }
 
     //请求数据并解析服务器返回的数据
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public List<Commodity> initData(){
         List<Commodity> commodityList = new ArrayList<>();
         final String url = URLConfig.ALLSPURL;
@@ -327,20 +337,7 @@ public class AllPFragment extends Fragment implements View.OnClickListener {
         }else {
             Log.d(TAG, "showSptgHBDialog: user为空");
         }
-       /* //设置用户昵称
-        if(!(user.getNickName().equals("")) && !(user.getNickName().equals("null")) && user.getNickName().length()>0){
-            hbProductNikeName.setText(user.getNickName());
-        }else {
-            hbProductNikeName.setText("医麦合伙人");
-        }
-        //设置用户头像
-        if(user.getHeadImg().length()>0 && !(user.getHeadImg().equals("")) && !(user.getHeadImg().equals("null"))){
-            Picasso.with(getContext()).load(URLConfig.TPURL+user.getHeadImg()).transform(new CircleTransform()).into(hbTouXiang);
-        }else {
-            Bitmap touxaing = BitmapFactory.decodeResource(getResources(),R.mipmap.touxiang);
-            hbTouXiang.setImageBitmap(touxaing);
 
-        }*/
 
         //将布局设置给Dialog
         hbDialog.setContentView(inflate);

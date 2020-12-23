@@ -3,6 +3,7 @@ package com.em.home_tx;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
@@ -15,10 +16,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.em.R;
 import com.em.base.BaseActivity;
@@ -48,7 +51,7 @@ public class CashWithdrawalActivity extends BaseActivity<CashWithdrawalPersent> 
     private Dialog dialog;
     private Button txSuccess;
 
-    private ImageView TJYHK;  //添加银行卡
+    private LinearLayout TJYHK;  //添加银行卡
     private EditText cashMoney;
     private TextView editCash;
     private TextView cashAll;
@@ -78,7 +81,7 @@ public class CashWithdrawalActivity extends BaseActivity<CashWithdrawalPersent> 
     public void initData() {
         Intent intent = getIntent();
         canEran = intent.getStringExtra("canEran");
-        editCash.setText("可体现金额"+canEran+"元");
+        editCash.setText("可提现金额"+canEran+"元");
 
         String url = "?memberId="+ SpUtils.getLoginUserId(CashWithdrawalActivity.this);
         requestSelectBankInfo(URLConfig.SELECT_BANK_STATUS+url);
@@ -212,6 +215,7 @@ public class CashWithdrawalActivity extends BaseActivity<CashWithdrawalPersent> 
     //向服务器提交提现信息
     public void requestEranInfo(final String url, final Integer uid){
         new Thread(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
                 super.run();

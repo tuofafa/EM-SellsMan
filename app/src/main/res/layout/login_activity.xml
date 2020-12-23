@@ -5,8 +5,7 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0"
-        android:layout_weight="2">
+        android:layout_height="@dimen/dp_205">
         <LinearLayout
             android:background="@mipmap/backgroup"
             android:layout_width="match_parent"
@@ -30,138 +29,62 @@
 
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_0"
-        android:layout_weight="5">
+        android:layout_marginLeft="@dimen/dp_36"
+        android:layout_marginTop="@dimen/dp_34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:id="@+id/yzm_login">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="验证码登录"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_17"
+                android:textStyle="bold"
+                android:id="@+id/yzm_login_text"/>
+            <TextView
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_2"
+                android:id="@+id/yzm_login_xhx"/>
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="@dimen/dp_20">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0"
-                android:layout_weight="1">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="用户名登录"
-                    android:textSize="@dimen/sp_18"
-                    android:textStyle="bold"
-                    android:gravity="center_vertical"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0"
-                android:layout_weight="1.2"
-                android:orientation="vertical">
-              <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/dp_50">
-
-                  <ImageView
-                      android:layout_width="@dimen/dp_16"
-                      android:layout_height="@dimen/dp_17"
-                      android:layout_gravity="center"
-                      android:src="@mipmap/username" />
-                  <EditText
-                      android:layout_marginLeft="@dimen/dp_9"
-                      android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:hint="用户名"
-                      android:id="@+id/log_username"
-                      android:background="@null"
-                      android:textSize="@dimen/sp_15"
-                      android:textColor="#FFC2C2C2"/>
-              </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="-3dp"
-                    android:background="#e2e2e2"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0"
-                android:layout_weight="1.2"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/dp_5">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_50">
-                    <ImageView
-                        android:layout_width="@dimen/dp_16"
-                        android:layout_height="@dimen/dp_17"
-                        android:src="@mipmap/pwd"
-                        android:layout_gravity="center"/>
-                    <EditText
-                        android:layout_marginLeft="@dimen/dp_9"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="密码"
-                        android:id="@+id/log_password"
-                        android:background="@null"
-                        android:textSize="@dimen/sp_15"
-                        android:textColor="#FFC2C2C2"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="-3dp"
-                    android:background="#e2e2e2"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0"
-                android:layout_weight="1.2">
-                <Button
-                    android:background="@drawable/but_shape"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_44"
-                    android:text="立即登录"
-                    android:textSize="@dimen/sp_15"
-                    android:textColor="#FFF"
-                    android:id="@+id/log_button"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0"
-                android:layout_weight="1">
-                <LinearLayout
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="忘记密码"
-                        android:id="@+id/log_wjpwd"
-                        android:textSize="@dimen/sp_10"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="right">
-
-                    <TextView
-                        android:id="@+id/log_register"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="没有账户？立即注册"
-                        android:textColor="#00cc66"
-                        android:textSize="@dimen/sp_10"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_0"
-                android:layout_weight="2">
-            </LinearLayout>
+            android:gravity="center"
+            android:id="@+id/pwd_login">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码登录"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_17"
+                android:textStyle="bold"
+                android:id="@+id/pwd_login_text"/>
+            <TextView
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_2"
+                android:id="@+id/pwd_login_xhx"/>
         </LinearLayout>
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_marginLeft="@dimen/dp_36"
+        android:layout_marginRight="@dimen/dp_36"
+        android:layout_marginTop="@dimen/dp_33"
+        android:id="@+id/login_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
 </LinearLayout>

@@ -1,15 +1,20 @@
 package com.em.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.em.R;
 import com.em.config.URLConfig;
+import com.em.utils.SpUtils;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
@@ -26,8 +31,19 @@ public class GoodsDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Context context;
 
     public final List<String> typeList;
+
+    //点击图片事件
     public setGoodsOnItemClickListener onItemClickListener;
+
+    //长按文字事件
     public setGoodsOnLongItemClickListener onLongItemClickListener;
+
+    //点击下载按钮下载图片事件
+    public SetGoodsOnItemImgerDownloadListener itemImgerDownloadListener;
+
+    //点击复制按钮复制文本内容
+    public SetGoodsOnItemTextCopyListener itemTextCopyListener;
+
 
     public GoodsDetailsAdapter(Context context, List<String> typeList) {
         this.context = context;
@@ -40,6 +56,14 @@ public class GoodsDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void setGoodsOnLongItemClickListener(setGoodsOnLongItemClickListener onLongItemClickListener) {
         this.onLongItemClickListener = onLongItemClickListener;
+    }
+
+    public void setItemImgerDownloadListener(SetGoodsOnItemImgerDownloadListener itemImgerDownloadListener){
+        this.itemImgerDownloadListener = itemImgerDownloadListener;
+    }
+
+    public void setItemTextCopyListener(SetGoodsOnItemTextCopyListener itemTextCopyListener){
+        this.itemTextCopyListener = itemTextCopyListener;
     }
 
     /**
@@ -73,16 +97,21 @@ public class GoodsDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             TextViewHolder viewHolder = new TextViewHolder(view);
             return viewHolder;
         }
+
         return null;
     }
 
     //数据绑定到view控件上
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+
         if (holder instanceof ImgViewHolder) {
-            final String strImgUrl = URLConfig.TPURL + typeList.get(position).substring(1, typeList.get(position).length());
+
+            final String strImgUrl =typeList.get(position).substring(1, typeList.get(position).length());
 
             Picasso.with(context).load(strImgUrl).into(((ImgViewHolder) holder).goodsImgZhuTu);
+
+            //设置点击图片的接口回调
             ((ImgViewHolder) holder).goodsImgZhuTu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,16 +120,44 @@ public class GoodsDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     }
                 }
             });
+
+            //设置点击下载按钮的接口回调
+            ((ImgViewHolder) holder).imgDwonload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(itemImgerDownloadListener != null){
+                        itemImgerDownloadListener.onItemDownload(position,strImgUrl);
+                    }
+                }
+            });
         } else if (holder instanceof TextViewHolder) {
-            final String strText = typeList.get(position).substring(1, typeList.get(position).length());
-            ((TextViewHolder) holder).goodsText.setText(strText);
-            ((TextViewHolder) holder).goodsText.setOnLongClickListener(new View.OnLongClickListener() {
+
+            final String strWeb = typeList.get(position).substring(1, typeList.get(position).length());
+            System.out.println("适配器："+strWeb);
+            //获取邀请码
+            final String userCode = SpUtils.getUserCode(context);
+            //setText(strText+"&sc="+userCode);
+            //String html = "<p><img src=\"http://img.baidu.com/hi/face/i_f13.gif\"/>新华医疗</p>";
+            ((TextViewHolder) holder).goodsWebview.loadDataWithBaseURL(null,strWeb,"text/html","utf-8",null);
+
+            //设置长按文字的接口回调
+            ((TextViewHolder) holder).goodsWebview.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     if (onLongItemClickListener != null) {
-                        onLongItemClickListener.onLongItemClick(position,strText);
+                        onLongItemClickListener.onLongItemClick(position,strWeb+"&sc="+userCode);
                     }
                     return false;
+                }
+            });
+
+            //设置点击复制按钮的接口回调
+            ((TextViewHolder) holder).textCopy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(itemTextCopyListener != null){
+                        itemTextCopyListener.onItemTextCopy(position,strWeb+"&sc="+userCode);
+                    }
                 }
             });
         }
@@ -114,30 +171,48 @@ public class GoodsDetailsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     //图片的viewholder类
     public class ImgViewHolder extends RecyclerView.ViewHolder {
         public ImageView goodsImgZhuTu;
+        public LinearLayout imgDwonload;
 
         public ImgViewHolder(@NonNull View itemView) {
             super(itemView);
             goodsImgZhuTu = itemView.findViewById(R.id.goods_details_item_zhutu);
+            goodsImgZhuTu.setAdjustViewBounds(true);
+            imgDwonload = itemView.findViewById(R.id.share_img_download);
+
         }
     }
 
     //文字的viewHolder类
     public class TextViewHolder extends RecyclerView.ViewHolder {
-        public TextView goodsText;
+        public WebView goodsWebview;
+        public LinearLayout textCopy;
 
         public TextViewHolder(@NonNull View itemView) {
             super(itemView);
-            goodsText = itemView.findViewById(R.id.goods_details_item_text);
+            goodsWebview = itemView.findViewById(R.id.goods_details_item_webview);
+            textCopy = itemView.findViewById(R.id.share_text_copy);
         }
+
+
     }
 
-    //点击事件做接口回调
+    //点击图片事件做接口回调
     public interface setGoodsOnItemClickListener {
         void onItemClick(int position,String info);
     }
+    //点击下载按钮接口事件
+    public interface SetGoodsOnItemImgerDownloadListener{
+        void onItemDownload(int position,String imgUrl);
+    }
 
+    //长按文字事件接口
     public interface setGoodsOnLongItemClickListener {
         void onLongItemClick(int position,String info);
+    }
+
+    //点击复制按钮接口事件
+    public interface SetGoodsOnItemTextCopyListener{
+        void onItemTextCopy(int position,String content);
     }
 
 

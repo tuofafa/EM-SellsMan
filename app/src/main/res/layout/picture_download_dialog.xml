@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_130"
+        android:layout_height="@dimen/dp_130"
+        android:orientation="vertical"
+        android:background="@drawable/image_download_dialog_bg">
+
+        <ProgressBar
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="40"
+            style="?android:attr/textAppearanceMedium"
+            android:indeterminateDrawable="@drawable/download_imger_progress_bar"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_22"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下载进度："
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/sp_13"/>
+            <TextView
+                android:id="@+id/current_item_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/sp_13"/>
+            <TextView
+                android:id="@+id/total_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/6"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/sp_13"/>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

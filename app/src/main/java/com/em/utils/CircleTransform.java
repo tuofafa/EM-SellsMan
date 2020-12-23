@@ -14,6 +14,7 @@ import com.squareup.picasso.Transformation;
  * @author fafatuo
  * @version 1.0
  * @date 2020/10/10 0010 10:10
+ * 头像圆的
  */
 public class CircleTransform implements Transformation {
 

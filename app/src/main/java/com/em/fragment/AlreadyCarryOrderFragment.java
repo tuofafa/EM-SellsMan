@@ -1,6 +1,7 @@
 package com.em.fragment;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,15 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.em.R;
 import com.em.adapter.OrderFragmentAdapter;
 import com.em.common.Common;
@@ -24,14 +24,11 @@ import com.em.config.URLConfig;
 import com.em.pojo.OrderEntity;
 import com.em.utils.NetWorkUtil;
 import com.em.utils.SpUtils;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * @author fafatuo
  * @version 1.0
@@ -83,6 +80,7 @@ public class AlreadyCarryOrderFragment extends Fragment {
     //在子线程中访问接口数据
     public void getRequestOrder(final String url){
         new Thread(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
                 super.run();
@@ -95,6 +93,8 @@ public class AlreadyCarryOrderFragment extends Fragment {
         }.start();
     }
     //请求服务器数据
+    @SuppressLint("LongLogTag")
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public List<OrderEntity> initData(String url){
         List<OrderEntity> list = new ArrayList<>();
         String res = NetWorkUtil.requestGet(URLConfig.LJ_ORDER_URL +url);
@@ -114,16 +114,17 @@ public class AlreadyCarryOrderFragment extends Fragment {
                     for(int i=0;i<array.length();i++){
                         OrderEntity order = new OrderEntity();
                         JSONObject object1 = array.getJSONObject(i);
-                        String actMoney = object1.optString("actMoney");    //佣金金额
+                        String actMoney = object1.optString("saleMoney");    //佣金金额
                         String buyName = object1.optString("buyName");      //购买客户
                         String orderTime = object1.optString("orderTime");  //购买时间
                         String productName = object1.optString("productName");  //购买产品
                         Integer saleState = object1.optInt("saleState");    //佣金状体
                         Integer uid = object1.optInt("memberId");           //用户id
                         String proImage = object1.optString("masterImg");   //商品图片
-
+                        Log.d(TAG, "佣金状态"+saleState);
                         if(saleState != null && saleState == 4){
                             order.setYognJinStatus("已提现");
+                            Log.d(TAG, "佣金金额"+actMoney);
                             if(actMoney != null && !(actMoney.equals("")) && !(actMoney.equals("null"))){
                                 order.setYjMoney(actMoney);
                             }

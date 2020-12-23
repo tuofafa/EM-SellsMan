@@ -5,20 +5,21 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="@dimen/dp_0"
+        android:layout_weight="0.7">
         <!--<TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>-->
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:text="分享海报"
             android:gravity="center"
-            android:textSize="22dp"
-            android:textColor="#FF333333"/>
+            android:textSize="@dimen/sp_19"
+            android:textColor="#FF333333"
+            android:textStyle="bold"/>
        <!-- <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -32,18 +33,18 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="0.01"
-        android:background="#FF666666">
+        android:background="#FFE5E5E5">
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dp_0"
         android:layout_weight="10"
         android:gravity="center">
         <ImageView
-            android:layout_width="300dp"
-            android:layout_height="400dp"
+            android:layout_width="@dimen/dp_300"
+            android:layout_height="@dimen/dp_422"
             android:id="@+id/goods_details_share_img"/>
     </LinearLayout>
 

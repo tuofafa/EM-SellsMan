@@ -92,6 +92,8 @@ public class AddBankActivity extends BaseActivity<AddBankaPresent> {
                 cardID.setText(bankEntity.getCid());
                 bankID.setText(bankEntity.getBankCode());
                 bankAdd.setText(bankEntity.getBankAdd());
+                submit.setText("确认修改");
+
             }
         }
     }

@@ -22,6 +22,7 @@ import com.em.home_grzl.PersonInfoActivity;
 import com.em.pojo.ResponseData;
 import com.em.utils.NetWorkUtil;
 import com.em.utils.SpUtils;
+import com.em.utils.StringUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,11 +41,15 @@ public class ModifyPersonActivity extends BaseActivity<ModifyPersonPersent> {
     private TextView modifyTitle;
     private LinearLayout submit;
     private EditText modifyInfo;
+    private TextView modifyTiShi;
+
     @Override
     public void initView() {
         modifyTitle = findViewById(R.id.modify_name);
         modifyInfo = findViewById(R.id.modify_info);
         submit = findViewById(R.id.modify_submit);
+        modifyTiShi = findViewById(R.id.modify_tishi);
+
     }
 
     @Override
@@ -57,11 +62,13 @@ public class ModifyPersonActivity extends BaseActivity<ModifyPersonPersent> {
        Intent intent =  getIntent();
         String title = intent.getStringExtra("title");
         String info = intent.getStringExtra("info");
+        String tishi = intent.getStringExtra("tishi");
         if(title.equals("") || info.equals("") || title.equals("null") || info.equals("null")){
 
         }else {
             modifyTitle.setText(title);
             modifyInfo.setText(info);
+            modifyTiShi.setText(tishi);
         }
     }
 
@@ -86,32 +93,47 @@ public class ModifyPersonActivity extends BaseActivity<ModifyPersonPersent> {
         Integer uid = SpUtils.getLoginUserId(ModifyPersonActivity.this);
 
         if(modifyTitle.getText().toString().equals("修改昵称")){
-            if(modifyInfo.getText().toString().equals("") || modifyInfo.getText().toString().equals("null")){
-                Common.showToast(this,"昵称为空……");
+            /*if(modifyInfo.getText().toString().equals("") || modifyInfo.getText().toString().equals("null")){
+
             }else {
-                Map<String,String> nickMap = new HashMap<>();
-                nickMap.put("uid",uid.toString());
-                nickMap.put("nickname",modifyInfo.getText().toString());
-                postModifyPersonNickname(nickMap);
+
+            }*/
+            String nickName = modifyInfo.getText().toString();
+            if(nickName.length()>0){
+                if(nickName.length()>3 && nickName.length()<11){
+                    Map<String,String> nickMap = new HashMap<>();
+                    nickMap.put("uid",uid.toString());
+                    nickMap.put("nickname",modifyInfo.getText().toString());
+                    postModifyPersonNickname(nickMap);
+                }else {
+                    Common.showToast(this,"昵称的长度必须为4-10字符之间");
+                }
+            }else {
+                Common.showToast(this,"昵称为空");
             }
         }
 
         if(modifyTitle.getText().toString().equals("修改手机号")){
-            if(modifyInfo.getText().toString().equals("") || modifyInfo.getText().toString().equals("null")){
-                Common.showToast(this,"手机号为空……");
-                //这里应该做手机号鉴别
+
+            String phoneNum = modifyInfo.getText().toString();
+            if(phoneNum.length()>0){
+                if(StringUtils.isPhone(phoneNum)){
+                    Map<String,String> phoneMap = new HashMap<>();
+                    phoneMap.put("uid",uid.toString());
+                    phoneMap.put("phone",phoneNum);
+                    postModifyPersonPhone(phoneMap);
+                }else {
+                    Common.showToast(this,"请输入合法的手机号");
+                }
             }else {
-                Map<String,String> phoneMap = new HashMap<>();
-                phoneMap.put("uid",uid.toString());
-                phoneMap.put("phone",modifyInfo.getText().toString());
-                postModifyPersonPhone(phoneMap);
+                Common.showToast(this,"手机号为空");
             }
         }
 
         if(modifyTitle.getText().toString().equals("修改微信号")){
 
-            if(modifyInfo.getText().toString().equals("") || modifyInfo.getText().toString().equals("null")){
-                Common.showToast(this,"微信号为空……");
+            if(modifyInfo.getText().toString().equals("") || modifyInfo.getText().toString().equals("null") || modifyInfo.getText().toString().length()<6 || modifyInfo.getText().toString().length()>20){
+                Common.showToast(this,"请输入正确的微信号");
                 //这里应该做微信号鉴别
             }else {
                 Map<String,String> weChatMap = new HashMap<>();
@@ -131,9 +153,9 @@ public class ModifyPersonActivity extends BaseActivity<ModifyPersonPersent> {
                         String nickname = (String) msg.obj;
                         ResponseData responseData = getRegisterHandle(nickname);
                        if(responseData.getSuccess().equals("null") || responseData.getSuccess().equals("")){
-                           Common.showToast(ModifyPersonActivity.this,"昵称修改失败，请检查当前网络环境……");
+                           Common.showToast(ModifyPersonActivity.this,"昵称修改失败，请检查当前网络环境");
                        }else {
-                           Common.showToast(ModifyPersonActivity.this,"昵称修改完成……");
+                           Common.showToast(ModifyPersonActivity.this,"昵称修改完成");
                            Intent intent = new Intent(ModifyPersonActivity.this, PersonInfoActivity.class);
                            startActivity(intent);
                            destroy();
@@ -148,9 +170,9 @@ public class ModifyPersonActivity extends BaseActivity<ModifyPersonPersent> {
                         String phone = (String) msg.obj;
                         ResponseData responseData = getRegisterHandle(phone);
                         if(responseData.getSuccess().equals("null") || responseData.getSuccess().equals("")){
-                            Common.showToast(ModifyPersonActivity.this,"手机号修改失败，请检查当前网络环境……");
+                            Common.showToast(ModifyPersonActivity.this,"手机号修改失败，请检查当前网络环境");
                         }else {
-                            Common.showToast(ModifyPersonActivity.this,"手机号修改完成……");
+                            Common.showToast(ModifyPersonActivity.this,"手机号修改完成");
                             Intent intent = new Intent(ModifyPersonActivity.this, PersonInfoActivity.class);
                             startActivity(intent);
                             destroy();
@@ -165,9 +187,9 @@ public class ModifyPersonActivity extends BaseActivity<ModifyPersonPersent> {
                         String weChat = (String) msg.obj;
                         ResponseData responseData = getRegisterHandle(weChat);
                         if(responseData.getSuccess().equals("null") || responseData.getSuccess().equals("")){
-                            Common.showToast(ModifyPersonActivity.this,"微信号修改失败，请检查当前网络环境……");
+                            Common.showToast(ModifyPersonActivity.this,"微信号修改失败，请检查当前网络环境");
                         }else {
-                            Common.showToast(ModifyPersonActivity.this,"微信号修改完成……");
+                            Common.showToast(ModifyPersonActivity.this,"微信号修改完成");
                             Intent intent = new Intent(ModifyPersonActivity.this, PersonInfoActivity.class);
                             startActivity(intent);
                             destroy();

@@ -2,9 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_100"
+    android:layout_height="@dimen/dp_90"
     android:background="@drawable/home_backgroud"
-    android:layout_margin="@dimen/dp_10">
+    android:layout_marginBottom="@dimen/dp_15"
+    android:layout_marginLeft="@dimen/dp_15"
+    android:layout_marginRight="@dimen/dp_15">
     <LinearLayout
         android:layout_width="@dimen/dp_0"
         android:layout_height="match_parent"
@@ -13,8 +15,9 @@
         <ImageView
             android:id="@+id/customer_img"
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:layout_marginLeft="@dimen/dp_5"
             android:src="@mipmap/touxiang"/>
     </LinearLayout>
 
@@ -25,55 +28,50 @@
         <LinearLayout
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_weight="1.1"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/dp_5">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0"
-                android:layout_weight="1">
+                android:layout_weight="0.4"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="0.8">
                 <TextView
                     android:id="@+id/customer_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="北京天坛医院"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/sp_14"
+                    android:textSize="@dimen/sp_15"
                     android:textColor="#FF333333"/>
-
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0"
-                android:layout_weight="1">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="成交金额:"
-                    android:textSize="@dimen/sp_13"
-                    android:gravity="center"
-                    android:textColor="#FF999999"/>
-
+                android:layout_weight="0.8">
                 <TextView
                     android:id="@+id/customer_cj_money"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="4500.00元"
-                    android:textSize="@dimen/sp_13"
-                    android:gravity="center"
-                    android:layout_marginLeft="@dimen/dp_10"/>
+                    android:textSize="@dimen/sp_12"
+                    android:gravity="center_vertical"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0"
-                android:layout_weight="1">
+                android:layout_weight="0.8">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="总返佣:"
                     android:textSize="@dimen/sp_13"
                     android:gravity="center"
-                    android:textColor="#FFFF6C00"/>
+                    android:textColor="#FFFF6C00"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/customer_fy_money"
@@ -83,40 +81,51 @@
                     android:textSize="@dimen/sp_13"
                     android:gravity="center"
                     android:layout_marginLeft="@dimen/dp_10"
-                    android:textColor="#FF6C00"/>
+                    android:textColor="#FF6C00"
+                    android:textStyle="bold"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="0.4"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_weight="1.3"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_5">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0"
-                android:layout_weight="1">
+                android:layout_weight="0.4"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="0.8">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="最近下单时间:"
-                    android:textSize="@dimen/sp_12"
                     android:gravity="center"
-                    android:textColor="#FF999999"/>
-
+                    android:text="最近下单时间:"
+                    android:textColor="#FF999999"
+                    android:textSize="@dimen/sp_12" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="2020.6.16"
                     android:textSize="@dimen/sp_12"
                     android:gravity="center"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:textColor="#FF999999"
+                    android:layout_marginLeft="@dimen/dp_2"
+                    android:textColor="#999999"
                     android:id="@+id/customer_time"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0"
-                android:layout_weight="1">
+                android:layout_weight="0.8">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -124,7 +133,6 @@
                     android:textSize="@dimen/sp_13"
                     android:gravity="center"
                     android:textColor="#FF999999"/>
-
                 <TextView
                     android:id="@+id/customer_order_num"
                     android:layout_width="wrap_content"
@@ -137,8 +145,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_0"
-                android:layout_weight="1">
+                android:layout_weight="0.8">
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="0.4"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

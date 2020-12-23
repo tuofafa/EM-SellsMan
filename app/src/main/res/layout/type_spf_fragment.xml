@@ -9,41 +9,60 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/all_splist"/>
-    <LinearLayout
-        android:layout_marginBottom="@dimen/dp_165"
-        android:layout_gravity="right|bottom"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#05BF61"
-            app:rippleColor="#46E593"
-            android:elevation="@dimen/dp_5"
-            app:pressedTranslationZ="@dimen/dp_15"
-            app:fabSize="mini"
-            app:borderWidth="@dimen/dp_0"
-            android:src="@mipmap/xuanfu"
-            android:id="@+id/fab_cate"
-            android:layout_marginBottom="-5dp"/>
 
+    <LinearLayout
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:orientation="vertical"
+        android:layout_marginRight="@dimen/dp_20">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/dp_50"
             android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="@dimen/dp_m_5"
+            android:gravity="center"
             android:orientation="vertical">
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_2"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_17"
-                android:textSize="@dimen/sp_8"
-                android:text="专题分享"
-                android:background="@drawable/xuanfu"
-                android:textColor="#FFFFFF"
-                android:gravity="center"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_cate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#05BF61"
+                android:elevation="@dimen/dp_5"
+                android:src="@mipmap/xuanfu"
+                app:borderWidth="@dimen/dp_0"
+                app:fabSize="mini"
+                app:pressedTranslationZ="@dimen/dp_15"
+                app:rippleColor="#46E593" />
         </LinearLayout>
+        <FrameLayout
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="@dimen/dp_95"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_2" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_17"
+                    android:background="@drawable/but_shape_xuanfu"
+                    android:gravity="center"
+                    android:text="专题分享"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/sp_10"/>
+            </LinearLayout>
+        </FrameLayout>
     </LinearLayout>
+
 </FrameLayout>

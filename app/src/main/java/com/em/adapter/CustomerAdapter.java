@@ -1,5 +1,7 @@
 package com.em.adapter;
 
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,11 +40,30 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(t.get(position) instanceof CustomerEntity){
+
+
             CustomerEntity customerEntity = (CustomerEntity) t.get(position);
-            holder.customerCJMoney.setText(customerEntity.getMoneyAll());
-            holder.customerOrderNum.setText(customerEntity.getOrderNum());
+           /* Log.d("Test", "customerEntity.getMoneyAll(): "+customerEntity.getMoneyAll());
+            Log.d("Test", "customerEntity.getOrderNum(): "+customerEntity.getOrderNum());
+            String cjMoney = customerEntity.getMoneyAll();
+            String orderSum = customerEntity.getOrderNum();
+            String cj = "<font color= \"#FFFFFF\">"+cjMoney+"</font><font color= \"#999999\">元</font>";
+            String orderNum = "<font color= \"#FFFFFF\">"+orderSum+"</font><font color= \"#999999\">单</font>";
+            String fyMoney = "<font color= \"#FF6C00\">"+customerEntity.getMoneyGet()+"</font><font color= \"#FF6C00\">元</font>";
+*/
+            if(customerEntity.getMoneyAll().equals("null")){
+                holder.customerCJMoney.setText("成交金额: "+0+"元");
+            }else {
+                holder.customerCJMoney.setText("成交金额: "+customerEntity.getMoneyAll()+"元");
+            }
+            if(customerEntity.getMoneyGet().equals("null")){
+                holder.customerFYMoney.setText(0+"元");
+            }else {
+                holder.customerFYMoney.setText(customerEntity.getMoneyGet()+"元");
+            }
+
+            holder.customerOrderNum.setText(customerEntity.getOrderNum()+"单");
             holder.customerTime.setText(customerEntity.getCreateTime());
-            holder.customerFYMoney.setText(customerEntity.getMoneyGet());
             holder.customerName.setText(customerEntity.getMemberName());
         }
     }

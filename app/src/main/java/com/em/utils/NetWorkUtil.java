@@ -28,7 +28,8 @@ public class NetWorkUtil {
 
     //public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
     //登录的Post方法
-    public static String requestLoginPost(String url,User user){
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String requestLoginPost(String url, User user){
 
         OkHttpClient client = new OkHttpClient();
         RequestBody body1 = new FormBody.Builder()
@@ -49,13 +50,15 @@ public class NetWorkUtil {
     }
 
     //注册的Post方法
-    public static String requestRegisterPost(String url,User user){
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String requestRegisterPost(String url, User user){
 
         OkHttpClient client = new OkHttpClient();
         RequestBody body1 = new FormBody.Builder()
                 .add("userName",user.getAccountName())
                 .add("password",user.getPassword())
                 .add("smsCode",user.getVerificationCode())
+                .add("uid",user.getSmsUID()+"")
                 .add("phone",user.getPhoneNum())
                 .build();
         Request request = new Request.Builder()
@@ -71,6 +74,7 @@ public class NetWorkUtil {
     }
 
     //发送短信的验证码消息
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String requestSendMSG(String url) throws IOException {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -85,6 +89,7 @@ public class NetWorkUtil {
     }
 
     //get请求方式
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String requestGet(String url){
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -99,6 +104,7 @@ public class NetWorkUtil {
     }
 
     //修改个人信息--昵称
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String requestModifyPersonNickname(String url, Map<String,String> map){
         OkHttpClient client = new OkHttpClient();
         RequestBody body1 = new FormBody.Builder()
@@ -117,6 +123,7 @@ public class NetWorkUtil {
         return null;
     }
     //修改个人信息--手机号
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String requestModifyPersonPhone(String url, Map<String,String> map){
         OkHttpClient client = new OkHttpClient();
         RequestBody body1 = new FormBody.Builder()
@@ -136,7 +143,8 @@ public class NetWorkUtil {
     }
 
     //修改个人信息--头像图片地址
-    public static String requestModifyImg(String url,Integer uid,String imgPath){
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String requestModifyImg(String url, Integer uid, String imgPath){
         OkHttpClient client = new OkHttpClient();
         RequestBody body1 = new FormBody.Builder()
                 .add("memberId",uid+"")
@@ -154,6 +162,7 @@ public class NetWorkUtil {
         return null;
     }
     //修改个人信息--微信号
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String requestModifyPersonWeChat(String url, Map<String,String> map){
         OkHttpClient client = new OkHttpClient();
         RequestBody body1 = new FormBody.Builder()
@@ -173,6 +182,7 @@ public class NetWorkUtil {
     }
 
     //密码重置接口
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String requestResetPwd(String url, Map<String,String> map){
         OkHttpClient client = new OkHttpClient();
         RequestBody body1 = new FormBody.Builder()
@@ -191,6 +201,7 @@ public class NetWorkUtil {
         return null;
     }
     //添加银行卡
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String requestAddBankCard(String url, Map<String,String> map){
         OkHttpClient client = new OkHttpClient();
         RequestBody body1 = new FormBody.Builder()
@@ -215,7 +226,8 @@ public class NetWorkUtil {
     }
 
     //提现接口
-    public static String requestTXMoney(String url,Integer uid){
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String requestTXMoney(String url, Integer uid){
         OkHttpClient client = new OkHttpClient();
         RequestBody body1 = new FormBody.Builder()
                 .add("memberId",uid+"")                          //用户id

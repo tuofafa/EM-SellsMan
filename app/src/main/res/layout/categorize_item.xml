@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/categorize_item_id"
-        android:textSize="@dimen/sp_15"
-        android:textColor="#FF666666"
-        android:layout_margin="@dimen/dp_10"
-        android:gravity="center"/>
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        android:gravity="center"
+        android:textSize="@dimen/sp_15" />
+    <TextView
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_3"
+        android:background="#F7F8FA"
+        android:id="@+id/item"/>
+
+
+    <!-- android:textColor="@drawable/text_bg"-->
 </LinearLayout>

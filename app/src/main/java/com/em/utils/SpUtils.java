@@ -42,7 +42,7 @@ public class SpUtils {
 
     //保存用户的id
     public static void putLoginUserId(Context context,Integer uid){
-        sp = context.getSharedPreferences("config",Context.MODE_PRIVATE);
+        sp = context.getSharedPreferences("config",Context.MODE_MULTI_PROCESS);
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt("uid",uid);
         editor.commit();
@@ -50,7 +50,7 @@ public class SpUtils {
 
     //获取用户的id
     public static Integer getLoginUserId(Context context){
-        sp = context.getSharedPreferences("config",Context.MODE_PRIVATE);
+        sp = context.getSharedPreferences("config",Context.MODE_MULTI_PROCESS);
         Integer uid = sp.getInt("uid",-1);
         return uid;
     }
@@ -138,6 +138,22 @@ public class SpUtils {
         Type type = new TypeToken<BankEntity>(){}.getType();
         BankEntity bankEntity = gson.fromJson(json,type);
         return bankEntity;
+    }
+
+
+    //保存用户的银行卡类型
+    public static void putVersionInfo(Context context,String versionName){
+        sp = context.getSharedPreferences("config",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("versionName",versionName);
+        editor.commit();
+    }
+
+    //获取用户的银行卡类型
+    public static String getVersionInfo(Context context){
+        sp = context.getSharedPreferences("config",Context.MODE_PRIVATE);
+        String bankName = sp.getString("versionName",null);
+        return bankName;
     }
 
 }

@@ -4,7 +4,7 @@
     <solid android:color="#FFFFFF"/>
     <!--设置圆角-->
     <corners
-        android:topLeftRadius="25px"
-        android:topRightRadius="25px"
+        android:topLeftRadius="@dimen/dp_20"
+        android:topRightRadius="@dimen/dp_20"
       />
 </shape>

@@ -3,6 +3,7 @@ package com.em.home_grzl;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import com.em.R;
@@ -37,12 +39,19 @@ import com.em.config.URLConfig;
 import com.em.modify.ModifyPersonActivity;
 import com.em.pojo.User;
 import com.em.utils.CircleTransform;
+import com.em.utils.Const;
 import com.em.utils.NetWorkUtil;
 import com.em.utils.SpUtils;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @author fafatuo
@@ -66,6 +75,29 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
     private TextView takePhoto;
     private Dialog dialog;
     private TextView cancel;
+
+    //先定义
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+
+    private static String[] PERMISSIONS_STORAGE = {
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE",
+            "android.permission.CAMER"};
+
+    //然后通过一个函数来申请
+    public static void verifyStoragePermissions(Activity activity) {
+        try {
+            //检测是否有写的权限
+            int permission = ActivityCompat.checkSelfPermission(activity,
+                    "android.permission.WRITE_EXTERNAL_STORAGE");
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // 没有写的权限，去申请写的权限，会弹出对话框
+                ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,REQUEST_EXTERNAL_STORAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void initView() {
@@ -101,6 +133,7 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
     //向服务器请求用户更新后的数据
     public void updateUserInfo(final String url){
         new Thread(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
                 super.run();
@@ -135,7 +168,6 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
                                 setTouXiang.setImageBitmap(touxiang);
                             }else {
                                 String img = URLConfig.TPURL+spUser.getHeadImg();
-                                //Picasso.with(PersonInfoActivity.this).load(img).into(setTouXiang);
                                 //设置成圆型
                                 Picasso.with(PersonInfoActivity.this).load(img).transform(new CircleTransform()).into(setTouXiang);
                             }
@@ -192,6 +224,7 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
             case R.id.edit_nickname:        //编辑昵称
                 Intent intent = new Intent(PersonInfoActivity.this, ModifyPersonActivity.class);
                 intent.putExtra("title","修改昵称");
+                intent.putExtra("tishi","请设置4-10个字的字符");
                 String nickName = setNickname.getText().toString();
                 if(nickName.equals("") || nickName.equals("null") || nickName == null){
                     nickName = "请添加您的昵称……";
@@ -203,6 +236,7 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
             case R.id.edit_phone:           //编辑手机号
                 Intent phone = new Intent(PersonInfoActivity.this, ModifyPersonActivity.class);
                 phone.putExtra("title","修改手机号");
+                phone.putExtra("tishi","请输入手机号");
                 String phoneNum = setPhone.getText().toString();
                 if(phoneNum.equals("") || phoneNum.equals("null") || phoneNum == null){
                     phoneNum = "请添加您的手机号……";
@@ -214,6 +248,7 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
             case R.id.edit_weChat:          //编辑微信号
                 Intent weChat = new Intent(PersonInfoActivity.this, ModifyPersonActivity.class);
                 weChat.putExtra("title","修改微信号");
+                weChat.putExtra("tishi","请输入微信号");
                 String wechat = setWeChat.getText().toString();
                 if(wechat.equals("") || wechat.equals("null") || wechat == null){
                     wechat = "请添加您的微信号……";
@@ -227,7 +262,31 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
                 break;
             case R.id.xiangce:              //相册
                 Toast.makeText(PersonInfoActivity.this,"相册",Toast.LENGTH_SHORT).show();
-                openSysAlbum();
+                //openSysAlbum();
+                verifyStoragePermissions(this);
+
+                PictureSelector.create(this)
+                        .openGallery(PictureConfig.TYPE_IMAGE)
+                        .imageSpanCount(2)// 每行显示个数 int
+                        .maxSelectNum(1)
+                        .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
+                        .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
+                        .previewImage(true)// 是否可预览图片 true or false
+                        .isCamera(true)// 是否显示拍照按钮 true or false
+                        .imageFormat(PictureMimeType.JPEG)// 拍照保存图片格式后缀,默认jpeg
+                        .isZoomAnim(false)// 图片列表点击 缩放效果 默认true
+                        .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填
+                        .enableCrop(true)// 是否裁剪 true or false
+                        .compress(true)// 是否压缩 true or false
+                        .compressSavePath(Const.getImgPath())//压缩图片保存地址
+                        .freeStyleCropEnabled(false)// 裁剪框是否可拖拽 true or false
+                        .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
+                        .isDragFrame(true) //是否可拖拽裁剪框
+                        .openClickSound(true)
+                        //.cropWH(50,50)
+                        //.circleDimmedLayer(true)
+                        .withAspectRatio(16,16)
+                        .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
                 dialog.cancel();
                 break;
             case R.id.cancel:               //取消
@@ -268,6 +327,8 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
         dialog.show();//显示对话框
     }
 
+
+
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler(){
         @Override
@@ -303,6 +364,8 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
         }
     };
 
+
+
     //上传头像
     public void uploadPic(final Integer uid, final String url, final String imgPath){
         new Thread(){
@@ -322,6 +385,7 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
     //上头头像的图片地址
     public void uploadImgPath(final String url, final Integer uid, final String imgPath){
         new Thread(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
                 super.run();
@@ -340,13 +404,13 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
         return res;
     }
 
-    public String submitImgPath(String url,Integer uid,String imgPath){
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public String submitImgPath(String url, Integer uid, String imgPath){
         String res = NetWorkUtil.requestModifyImg(url,uid,imgPath);
         return res;
     }
 
     public static int ALBUM_RESULT_CODE = 0x999 ;
-
     /**
      * 打开系统相册
      * 定义Intent跳转到特定图库的Uri下挑选，然后将挑选结果返回给Activity
@@ -357,12 +421,30 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
         startActivityForResult(albumIntent, ALBUM_RESULT_CODE);
     }
 
-    //重载onActivityResult方法，获取相应数据
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == -1 && data != null) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    Uri uri = Uri.parse(selectList.get(0).getCompressPath());
+                    //img1.setImageURI(Uri.parse(selectList.get(0).getCompressPath()));
+                    System.out.println(uri);
+                    displayImagerUri(uri);
+                    break;
+
+            }
+        }
+    }
+
+    //重载onActivityResult方法，获取相应数据
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         handleImageOnKitKat(data);
-    }
+    }*/
 
     //这部分的代码目前没有理解，只知道作用是根据条件的不同去获取相册中图片的url
     //这一部分是从其他博客中查询的
@@ -390,15 +472,14 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
             // 如果是file类型的Uri，直接获取图片路径即可
             imagePath = uri.getPath();
-
         }
         // 根据图片路径显示图片
         displayImage(imagePath);
-
-        Message message = Message.obtain();
+       /* Message message = Message.obtain();
         message.what = 0x11;
+
         message.obj = imagePath;
-        handler.sendMessage(message);
+        handler.sendMessage(message);*/
     }
 
 
@@ -424,4 +505,22 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
         setTouXiang.setImageBitmap(bitmap);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void displayImagerUri(Uri uri){
+        System.out.println(uri);
+       //Picasso.with(PersonInfoActivity.this).load(this.getResources().getResourceName(R.mipmap.erweima)).into(setTouXiang);
+        Bitmap bitmap = BitmapFactory.decodeFile(uri.getPath());
+        bitmap = CircleTransform.toRoundBitmap(bitmap);
+
+        setTouXiang.setImageBitmap(bitmap);
+        //Picasso.with(PersonInfoActivity.this).load(uri.getPath()).transform(new CircleTransform()).into(setTouXiang);
+        Message message = Message.obtain();
+        message.what = 0x11;
+
+        message.obj = uri.getPath();
+        handler.sendMessage(message);
+
+    }
+
 }
+

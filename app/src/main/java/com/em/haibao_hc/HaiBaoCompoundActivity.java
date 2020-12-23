@@ -14,8 +14,10 @@ import com.em.R;
 import com.em.base.BaseActivity;
 import com.em.common.Common;
 import com.em.config.URLConfig;
+import com.em.home_grzl.PersonInfoActivity;
 import com.em.pojo.Commodity;
 import com.em.pojo.User;
+import com.em.utils.CircleTransform;
 import com.em.utils.QRCodeUtil;
 import com.em.utils.SavePicture;
 import com.em.utils.SpUtils;
@@ -64,9 +66,10 @@ public class HaiBaoCompoundActivity extends BaseActivity<HaiBaoCompoundPersent>{
         if(commodity!= null){
             Picasso.with(context).load(commodity.getMasterImg()).into(hbZhuTu);
             hbProductInstruction.setText(commodity.getName());
-            hbProductPrice.setText(commodity.getMarktPrice().toString());
+            hbProductPrice.setText("￥"+commodity.getMarktPrice().toString());
+            String code = SpUtils.getUserCode(context);
             //商品二维码
-            String qErCode = URLConfig.PREDUCT_URL+commodity.getId();
+            String qErCode = URLConfig.PREDUCT_URL+commodity.getId()+"&sc="+code;
             Bitmap ewCode = QRCodeUtil.createQRCodeBitmap(qErCode,400,400);
             hbZTqrCode.setImageBitmap(ewCode);
         }
@@ -74,11 +77,10 @@ public class HaiBaoCompoundActivity extends BaseActivity<HaiBaoCompoundPersent>{
         User loginInfo = SpUtils.getLoginInfo(context);
         if(loginInfo != null){
             //设置头像
-            Picasso.with(context).load(URLConfig.TPURL+loginInfo.getHeadImg()).into(hbTouXiang);
-            Log.d(TAG, "头像地址链接"+loginInfo.getHeadImg());
+            Picasso.with(HaiBaoCompoundActivity.this).load(URLConfig.TPURL+loginInfo.getHeadImg()).transform(new CircleTransform()).into(hbTouXiang);
+            hbProductNikeName.setText(loginInfo.getNickName());
         }
     }
-
     @Override
     public void initListener() {
         view.setOnClickListener(this);
@@ -100,12 +102,12 @@ public class HaiBaoCompoundActivity extends BaseActivity<HaiBaoCompoundPersent>{
 
         switch (v.getId()){
             case R.id.test:
-                Bitmap bitmap = viewAndBitmap(view);
-                Uri uri = SavePicture.saveBitmap(bitmap,context);
-                if(uri != null){
+                Bitmap bitmap = getViewBitmap(view);
+                    Uri uri = SavePicture.saveBitmap(bitmap,context);
+                    if(uri != null){
                     Intent imageIntent = new Intent(Intent.ACTION_SEND);
                     imageIntent.setType("image/*");
-                    imageIntent.setPackage("com.tencent.mm");  //设置分享到固定的应用程序
+                    //imageIntent.setPackage("com.tencent.mm");  //设置分享到固定的应用程序
                     imageIntent.putExtra(Intent.EXTRA_STREAM, uri);
                     startActivity(Intent.createChooser(imageIntent, "分享"));
                 }else {
@@ -114,8 +116,7 @@ public class HaiBaoCompoundActivity extends BaseActivity<HaiBaoCompoundPersent>{
                 break;
 
             case R.id.share_hb:
-
-                Bitmap bitmap1 = viewAndBitmap(view);
+                Bitmap bitmap1 = getViewBitmap(view);
                 Uri uri1 = SavePicture.saveBitmap(bitmap1,context);
                 if(uri1 != null){
                     Intent imageIntent = new Intent(Intent.ACTION_SEND);
@@ -137,6 +138,29 @@ public class HaiBaoCompoundActivity extends BaseActivity<HaiBaoCompoundPersent>{
         view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
         view.buildDrawingCache();
         Bitmap bitmap = view.getDrawingCache();
+        return bitmap;
+    }
+
+
+    private Bitmap getViewBitmap(View v) {
+        v.clearFocus();
+        v.setPressed(false);
+        boolean willNotCache = v.willNotCacheDrawing();
+        v.setWillNotCacheDrawing(false);
+        int color = v.getDrawingCacheBackgroundColor();
+        v.setDrawingCacheBackgroundColor(0);
+        if (color != 0) {
+            v.destroyDrawingCache();
+        }
+        v.buildDrawingCache();
+        Bitmap cacheBitmap = v.getDrawingCache();
+        if (cacheBitmap == null) {
+            return null;
+        }
+        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
+        v.destroyDrawingCache();
+        v.setWillNotCacheDrawing(willNotCache);
+        v.setDrawingCacheBackgroundColor(color);
         return bitmap;
     }
 

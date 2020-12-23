@@ -34,7 +34,7 @@ public class AllFragmentAdapter extends RecyclerView.Adapter<AllFragmentAdapter.
         this.listener = listener;
     }
 
-    public interface setAllOnItemClickListener{
+    public interface  setAllOnItemClickListener{
         void onClick(int position, Commodity sp);
     }
 
@@ -48,13 +48,19 @@ public class AllFragmentAdapter extends RecyclerView.Adapter<AllFragmentAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        //设置第一个item的上边距
+        /*if(position == 0){
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)holder.spShare.getLayoutParams();
+            layoutParams.setMargins(60,30,60,60);
+            holder.spShare.setLayoutParams(layoutParams);
+        }*/
         final Commodity commodity = commodityList.get(position);
         holder.spPrice.setText(commodity.getMarktPrice().toString());   //设置商品价格
         holder.spFYBiLi.setText("返佣比例"+(commodity.getSaleScale()*100)+"%"); //设置返佣比例
         holder.spDiscrption.setText(commodity.getName());               //设置商品名字
         //小数点保留两位
-        float sale = commodity.getMarktPrice()*commodity.getSaleScale();
-        DecimalFormat decimalFormat = new DecimalFormat(".00");
+        Float sale = commodity.getMarktPrice()*commodity.getSaleScale();
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
         //设置分享后预计赚多少钱
         holder.sales.setText(decimalFormat.format(sale));
         Picasso.with(context).load(commodity.getMasterImg()).into(holder.spImger);  //设置商品图片

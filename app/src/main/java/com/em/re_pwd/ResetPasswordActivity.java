@@ -79,7 +79,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordPersenter> 
                         responseData = (ResponseData) msg.obj;
                     }
                     if(responseData.getSuccess().equals("true")){
-                        Common.showToast(ResetPasswordActivity.this,"密码重置成功，稍后将发送到您的手机上，请您注意查收……");
+                        Common.showToast(ResetPasswordActivity.this,"密码重置成功，稍后将发送到您的手机上，请您注意查收");
                         Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
                         startActivity(intent);
                         destroy();

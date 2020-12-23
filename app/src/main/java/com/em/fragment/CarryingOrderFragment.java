@@ -1,6 +1,7 @@
 package com.em.fragment;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -85,6 +87,7 @@ public class CarryingOrderFragment extends Fragment {
     //在子线程中访问接口数据
     public void getRequestOrder(final String url){
         new Thread(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
                 super.run();
@@ -98,6 +101,7 @@ public class CarryingOrderFragment extends Fragment {
     }
 
     //请求服务器数据
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public List<OrderEntity> initData(String url){
         List<OrderEntity> list = new ArrayList<>();
         String res = NetWorkUtil.requestGet(URLConfig.LJ_ORDER_URL +url);
@@ -117,7 +121,7 @@ public class CarryingOrderFragment extends Fragment {
                     for(int i=0;i<array.length();i++){
                         OrderEntity order = new OrderEntity();
                         JSONObject object1 = array.getJSONObject(i);
-                        String actMoney = object1.optString("actMoney");    //佣金金额
+                        String actMoney = object1.optString("saleMoney");    //佣金金额
                         String buyName = object1.optString("buyName");      //购买客户
                         String orderTime = object1.optString("orderTime");  //购买时间
                         String productName = object1.optString("productName");  //购买产品

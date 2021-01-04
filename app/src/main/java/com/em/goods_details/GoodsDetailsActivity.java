@@ -89,6 +89,7 @@ public class GoodsDetailsActivity extends BaseActivity<GoodsDetailsPersent> {
         tuwenCompound = findViewById(R.id.goods_details_tuwen);
         hbCompound = findViewById(R.id.goods_details_hb);
         goodsRecyclerView = findViewById(R.id.gods_details_recyclview);
+
         commodity = (Commodity) getIntent().getSerializableExtra("commodit");
     }
 
@@ -407,8 +408,13 @@ public class GoodsDetailsActivity extends BaseActivity<GoodsDetailsPersent> {
                     e.printStackTrace();
                 }
 
+                //去掉商品文案中的html代码
+                textContent = textContent.replaceAll("<p>","");
+                textContent = textContent.replaceAll("</p>","");
+
                 //复制文案到剪贴板
-                setClipboard(textContent);
+                setClipboard(textContent.replaceAll("<br/>",""));
+
 
                 downloadDialog = new PictureDownloadDialog(context, "/" + strImgerUrl.size());
                 downloadDialog.show();

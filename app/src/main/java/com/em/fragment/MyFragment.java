@@ -28,6 +28,7 @@ import com.em.R;
 import com.em.base.BaseFragment;
 import com.em.common.Common;
 import com.em.config.URLConfig;
+import com.em.guide.NoviceGuideActivity;
 import com.em.home_customer.CumulativeCustomerActivity;
 import com.em.home_earning.CumulativeEarningActivity;
 import com.em.home_grzl.PersonInfoActivity;
@@ -36,6 +37,7 @@ import com.em.home_qztg.TGShareActivity;
 import com.em.home_tgsp.TGCommodityActivity;
 import com.em.home_tx.CashWithdrawalActivity;
 import com.em.home_zhgl.AccountMangerActivity;
+import com.em.notice.NoticeCentActivity;
 import com.em.pojo.HomeEntity;
 import com.em.pojo.User;
 import com.em.utils.CircleTransform;
@@ -55,25 +57,12 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     private static final String TAG = "HomeActivity";
 
-    private Button LJMButton;
-    private Button CPLJMButton;
-    private ImageView GRZLImageview;
-    private TextView LJSYTextview;
-    private TextView LJKHTextview;
-    private TextView LJDDTextview;
-    private TextView DTXJETextview;
-    private Button WYTXButton;
-    private LinearLayout TGCPImageview;
-    private LinearLayout QZTGImageview;
-    private LinearLayout KHBBImageview;
-    private LinearLayout TZZXImageview;
-    private LinearLayout XSYDImageview;
-    private LinearLayout ZHGLImageview;
-    private LinearLayout versionCheck;
+    private TextView LJSYTextview,DTXJETextview,LJKHTextview,LJDDTextview,homeNickName;
+    private LinearLayout TGCPImageview,QZTGImageview,KHBBImageview,versionCheck;
+    private LinearLayout TZZXImageview,XSYDImageview,ZHGLImageview;
+    private Button LJMButton,CPLJMButton,WYTXButton;
     private LinearLayout LJSYClick, LJKHClick, LJDDClick;
-    private TextView homeNickName;
-    private ImageView homeTouXiang;
-
+    private ImageView GRZLImageview,homeTouXiang;
 
     @Override
     public void initView(View view) {
@@ -150,7 +139,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         LJKHClick.setOnClickListener(this);
 
         versionCheck.setOnClickListener(this);
-
+        XSYDImageview.setOnClickListener(this);
+        TZZXImageview.setOnClickListener(this);
     }
 
     @Override
@@ -196,11 +186,16 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.home_qztg:        //全站推广
                 Intent qgShare = new Intent(getContext(), TGShareActivity.class);
-                String url = "http://m.emaimed.com/?sc=" + SpUtils.getUserCode(getContext());
+                String url = "http://m.emaimed.com/#/?sc=" + SpUtils.getUserCode(getContext());
                 qgShare.putExtra("type", "11");
                 qgShare.putExtra("url", url);
                 startActivity(qgShare);
                 break;
+            case R.id.home_tzzx:
+                Intent notice = new Intent(getContext(), NoticeCentActivity.class);
+                startActivity(notice);
+                break;
+
             case R.id.qztg_qx:
                 Toast.makeText(getContext(), "取消", Toast.LENGTH_SHORT).show();
                 break;
@@ -216,6 +211,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 } else {
                     System.out.println("versionInfo 为空");
                 }
+                break;
+
+            case R.id.home_xsyd:
+                Intent noviceGuide = new Intent(getContext(), NoviceGuideActivity.class);
+                startActivity(noviceGuide);
                 break;
 
             default:

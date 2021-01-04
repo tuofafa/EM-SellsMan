@@ -70,7 +70,8 @@ public class CumulativeOrderActivity extends BaseActivity<CumulativeOrderPersent
 
         recyclerViewCumuOrderMenu.setLayoutManager(manger);
         recyclerViewCumuOrderMenu.setAdapter(adapter);
-        recyclerViewCumuOrderMenu.addItemDecoration(new HorizontalItemDecoration(18,this));
+        int item = this.getResources().getDimensionPixelSize(R.dimen.dp_4);
+        recyclerViewCumuOrderMenu.addItemDecoration(new HorizontalItemDecoration(item,this));
         adapter.setOnItemClickListener(new CumuOrderMenuItemAdapter.setOnItemClickMenu() {
             @Override
             public void onClick(int position, String dateMu) {

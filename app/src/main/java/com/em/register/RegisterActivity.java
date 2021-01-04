@@ -19,12 +19,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-
 import com.em.R;
 import com.em.base.BaseActivity;
 import com.em.common.Common;
@@ -35,10 +34,8 @@ import com.em.pojo.User;
 import com.em.protocol.RegisterProtocol;
 import com.em.utils.NetWorkUtil;
 import com.em.utils.StringUtils;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 
 public class RegisterActivity extends BaseActivity<RegisterPersenter> implements IRegister.P {
@@ -46,14 +43,12 @@ public class RegisterActivity extends BaseActivity<RegisterPersenter> implements
     private static final int SENDMSG = 0x102;       //发送短信的验证码
     private static final String TAG = "RegisterActivity";
 
-    private EditText phoneNum;
-    private Button sendYzm;
-    private EditText inputYzm;
-    private EditText password;
-    private EditText rePassword;
-    private Button regButton;
-    private TextView regXY;
+    private EditText phoneNum,inputYzm,password,rePassword;
     private ImageView pwdYanJing, pwdSureYanJing;
+    private TextView regXY,sendYZMText;
+    private LinearLayout sendYzm;
+    private Button regButton;
+
     private boolean yanFlag = true;
     private Integer smsUID;
 
@@ -67,7 +62,8 @@ public class RegisterActivity extends BaseActivity<RegisterPersenter> implements
         regXY = findViewById(R.id.reg_xieyi);
         pwdYanJing = findViewById(R.id.yanjian_repwd_state);
         pwdSureYanJing = findViewById(R.id.yanjian_repwd_queren_state);
-        smsUID = getRandom();
+        sendYZMText = findViewById(R.id.register_login_send_text);
+
     }
 
     @Override
@@ -92,6 +88,7 @@ public class RegisterActivity extends BaseActivity<RegisterPersenter> implements
 
     @Override
     public void initListener() {
+
         regButton.setOnClickListener(this);
         sendYzm.setOnClickListener(this);
         regXY.setOnClickListener(this);
@@ -116,11 +113,11 @@ public class RegisterActivity extends BaseActivity<RegisterPersenter> implements
                 //校验用户是否输入，输入的是否是手机号码？
                 String phone1 = phoneNum.getText().toString();
                 if (phone1.length() > 0) {
-                    String param = "?mob=" + phone1 + "&uid=" + smsUID;
                     boolean flag = StringUtils.isPhone(phone1);
                     Log.d(TAG, "验证手机号" + flag);
-                    Log.d(TAG, "发送手机短信验证码格式" + param);
                     if (StringUtils.isPhone(phone1)) {
+                        smsUID = getRandom();
+                        String param = "?mob=" + phone1 + "&uid=" + smsUID;
                         getRequestSendMSG(param);
                         timer.start();
                     } else {
@@ -189,6 +186,7 @@ public class RegisterActivity extends BaseActivity<RegisterPersenter> implements
                 String pwd = password.getText().toString();
                 String rePwd = rePassword.getText().toString();
                 user.setSmsUID(smsUID);
+                System.out.println("注册SMSUID"+smsUID);
 
                 //验证注册信息
                 chenkUserRegisterInfo(user, phone, yzm, pwd, rePwd);
@@ -238,18 +236,18 @@ public class RegisterActivity extends BaseActivity<RegisterPersenter> implements
             switch (msg.what) {
                 case SENDMSG:
                     try {
-                        System.out.println("短信发送");
-                        String sendMsg = String.valueOf(msg.obj);
-                        ResponseData response = getSendMsgHandle(sendMsg);
-                        if (response.getSuccess().equals("true")) {
-                            Toast.makeText(RegisterActivity.this, "短信已发送成功", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(RegisterActivity.this, "请检查当前网络状态是否良好", Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    System.out.println("短信发送");
+                    String sendMsg = String.valueOf(msg.obj);
+                    ResponseData response = getSendMsgHandle(sendMsg);
+                    if (response.getSuccess().equals("true")) {
+                        Toast.makeText(RegisterActivity.this, "短信已发送成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "请检查当前网络状态是否良好", Toast.LENGTH_SHORT).show();
                     }
-                    break;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
                 case REGISTER:
                     try {
                         String registerInfo = (msg.obj).toString();
@@ -362,27 +360,26 @@ public class RegisterActivity extends BaseActivity<RegisterPersenter> implements
         }
         return number;
     }
-
     //倒计时发送验证码
     CountDownTimer timer = new CountDownTimer(60 * 1000, 1000) {
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onTick(long millisUntilFinished) {
-            sendYzm.setText("还剩" + millisUntilFinished / 1000 + "秒");
+            sendYZMText.setText("还剩" + millisUntilFinished / 1000 + "秒");
             //设置按钮不可点击
             sendYzm.setClickable(false);
             //sendYzm.setBackgroundColor(Color.parseColor("#F7F7F7"));
             sendYzm.setBackground(getDrawable(R.drawable.send_phonenum_1));
-            sendYzm.setTextColor(Color.parseColor("#BABABA"));
+            sendYZMText.setTextColor(Color.parseColor("#BABABA"));
         }
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onFinish() {
-            sendYzm.setText("获取验证码");
+            sendYZMText.setText("获取验证码");
             sendYzm.setClickable(true);
             sendYzm.setBackgroundDrawable(getDrawable(R.drawable.send_phonenum));
-            sendYzm.setTextColor(Color.parseColor("#06C061"));
+            sendYZMText.setTextColor(Color.parseColor("#06C061"));
         }
     };
 }

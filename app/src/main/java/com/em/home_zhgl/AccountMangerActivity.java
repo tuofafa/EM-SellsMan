@@ -10,6 +10,7 @@ import com.em.R;
 import com.em.base.BaseActivity;
 import com.em.common.Common;
 import com.em.login.LoginActivity;
+import com.em.modify_pwd.ModifyPasswordActivity;
 
 import java.time.format.DecimalStyle;
 
@@ -70,21 +71,16 @@ public class AccountMangerActivity extends BaseActivity<AccountMangerPersent> {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.modify_pwd_account_manger:
-                Common.showToast(context,"修改密码");
+                Intent modifyPwd = new Intent(context, ModifyPasswordActivity.class);
+                startActivity(modifyPwd);
                 break;
 
             case R.id.register_account_manger:
-                Intent swichAccount = new Intent(context, LoginActivity.class);
-                startActivity(swichAccount);
-                swichAccount.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                swichAccount.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                destroy();
-                break;
             case R.id.logout_account_manger:
-                Intent logOut = new Intent(context, LoginActivity.class);
-                System.out.println("");
-                startActivity(logOut);
-                destroy();
+                Intent swichAccount = new Intent(context, LoginActivity.class);
+                //清空所有的任务栈TaskStack
+                swichAccount.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(swichAccount);
                 break;
         }
     }

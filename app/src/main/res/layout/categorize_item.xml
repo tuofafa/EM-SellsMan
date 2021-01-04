@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/categorize_item_id"
-        android:layout_width="@dimen/dp_70"
+        android:layout_width="@dimen/dp_80"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_5"
         android:gravity="center"

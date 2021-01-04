@@ -50,7 +50,8 @@
                 android:layout_width="@dimen/dp_16"
                 android:layout_height="@dimen/dp_16"
                 android:layout_marginRight="@dimen/dp_15"
-                android:src="@mipmap/sousuo" />
+                android:src="@mipmap/sousuo"
+                android:id="@+id/menu_item_search"/>
         </LinearLayout>
 
     </LinearLayout>

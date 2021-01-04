@@ -27,7 +27,7 @@ import okhttp3.Response;
 public class NetWorkUtil {
 
     //public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-    //登录的Post方法
+    //密码登录的Post方法
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String requestLoginPost(String url, User user){
 
@@ -36,6 +36,31 @@ public class NetWorkUtil {
                 .add("userName",user.getAccountName())
                 .add("password",user.getPassword())
                 .add("ip",user.getIpAddress())
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body1)
+                .build();
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //验证码登录的Post方法
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String verificationCodeLogin(String url, User user){
+
+        System.out.println("url"+url+"   "+user.toString()+"    ");
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body1 = new FormBody.Builder()
+                .add("userName",user.getAccountName())
+                .add("phone",user.getPhoneNum())
+                .add("ip",user.getIpAddress())
+                .add("smsCode",user.getVerificationCode())
+                .add("uid",user.getSmsUID().toString())
                 .build();
         Request request = new Request.Builder()
                 .url(url)
@@ -183,11 +208,14 @@ public class NetWorkUtil {
 
     //密码重置接口
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public static String requestResetPwd(String url, Map<String,String> map){
+    public static String requestResetPwd(String url,User user){
         OkHttpClient client = new OkHttpClient();
         RequestBody body1 = new FormBody.Builder()
-                .add("name",map.get("name"))
-                .add("mobile",map.get("mobile"))
+                .add("name",user.getAccountName())          //用户名
+                .add("mobile",user.getPhoneNum())           //手机号
+                .add("smsCode",user.getVerificationCode())  //短信验证码
+                .add("newPwd",user.getPassword())           //新密码
+                .add("uid",user.getSmsUID().toString())     //短信验证码随机数
                 .build();
         Request request = new Request.Builder()
                 .url(url)

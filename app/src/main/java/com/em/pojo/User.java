@@ -1,6 +1,8 @@
 package com.em.pojo;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private Integer accountId;          //用户ID
     private String accountName;         //账户名
@@ -11,7 +13,7 @@ public class User {
     private String headImg;             //用户头像
     private String weChat;              //微信号
     private String nickName;            //昵称
-    private Integer smsUID;
+    private Integer smsUID;             //uid随机数
 
     public Integer getSmsUID() {
         return smsUID;
@@ -105,6 +107,7 @@ public class User {
                 ", headImg='" + headImg + '\'' +
                 ", weChat='" + weChat + '\'' +
                 ", nickName='" + nickName + '\'' +
+                ", smsUID=" + smsUID +
                 '}';
     }
 }

@@ -6,8 +6,11 @@ package com.em.config;
  * discrption URL配置类
  */
 public class URLConfig {
-    //登录访问的接口URL
-    public static final String LoginURL = "http://47.111.231.22:8003/app-dologin.html";
+    //密码登录访问的接口URL
+    public static final String PasswordLoginURL = "http://47.111.231.22:8003/app-dologin.html";
+
+    //验证码登录访问的接口URL127.0.0.1:8003/app-dologinsms.html?userName=15810867923&phone=15810867923&ip=127.0.0.1&smsCode=654829&uid=222
+    public static final String VerificationCodeLogin = "http://47.111.231.22:8003/app-dologinsms.html";
 
     //短信发送接口
     public static String sendMSG = "http://47.111.231.22:8003/app-sendVerifySMS.html";
@@ -30,7 +33,7 @@ public class URLConfig {
     //查询个人信息
     public static final String SELECT_PERSON = "http://47.111.231.22:8003/member/app-info.html";
 
-    //密码重置URL
+    //密码重置URL127.0.0.1:8003/app-doforgetpassword.html?name=15810867923&mobile=15810867923&smsCode=160289&newPwd=111111&uid=222
     public static final String RESET_PWD = "http://47.111.231.22:8003/app-doforgetpassword.html";
 
     //每一个商品的URL
@@ -68,11 +71,13 @@ public class URLConfig {
     //提现记录URL GET
     public static final String TX_RECORD = "http://47.111.231.22:8003/member/app-sale-apply-money.html";
 
-
     //商品详情 (GET http://47.111.231.22:8003/product/json/545.html)
     public static final String GOODS_DETAILS = "http://47.111.231.22:8003/product/json/";
 
     //累计客户URL
     public static final String LJ_CUSTOMER = "http://47.111.231.22:8003/member/app-sale-member1.html";
+
+    //Get http://47.111.231.22:8003/searchJson.html?keyword=独家总代
+    public static final String SEARCH_KEYWORD = "http://47.111.231.22:8003/searchJson.html?";
 }
 

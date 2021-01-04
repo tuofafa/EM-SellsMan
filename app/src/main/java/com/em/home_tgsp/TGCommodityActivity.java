@@ -1,5 +1,6 @@
 package com.em.home_tgsp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +20,9 @@ import com.em.base.BaseActivity;
 import com.em.config.SpCateConstant;
 import com.em.fragment.AllPFragment;
 import com.em.fragment.HPFragment;
+import com.em.home_qztg.TGShareActivity;
 import com.em.pojo.Categorize;
+import com.em.search.SearchActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +49,7 @@ public class TGCommodityActivity extends BaseActivity<TGCommodityPersent> implem
             "耗材专区",
             "眼科专区",
             "实验室",
-            "兽用专区",
+            "京东大卖场",
             "急救专区"
     };
     @Override
@@ -101,7 +104,7 @@ public class TGCommodityActivity extends BaseActivity<TGCommodityPersent> implem
                         break;
                     case 7:
                         //兽用专区
-                        replaceFragment(new HPFragment(),SpCateConstant.SYZQ);
+                        replaceFragment(new HPFragment(),SpCateConstant.JD);
                         break;
                     case 8:
                         //急救专区
@@ -159,7 +162,8 @@ public class TGCommodityActivity extends BaseActivity<TGCommodityPersent> implem
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.home_tgsp_sousuo:
-                Toast.makeText(TGCommodityActivity.this,"搜索",Toast.LENGTH_SHORT).show();
+                Intent suosou = new Intent(TGCommodityActivity.this, SearchActivity.class);
+                startActivity(suosou);
             break;
             default:
                 break;

@@ -67,5 +67,9 @@
         <activity android:name=".main.MainAPP"/>
         <activity android:name=".home_frg_menu.MenuActivity"/>
         <activity android:name=".home_frg_menu.MenuItemContentActivity"/>
+        <activity android:name=".guide.NoviceGuideActivity"/>
+        <activity android:name=".search.SearchActivity"/>
+        <activity android:name=".modify_pwd.ModifyPasswordActivity"/>
+        <activity android:name=".notice.NoticeCentActivity"/>
     </application>
 </manifest>

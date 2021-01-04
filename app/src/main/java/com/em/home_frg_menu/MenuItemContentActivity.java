@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,13 +18,13 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.em.R;
-import com.em.adapter.AllFragmentAdapter;
 import com.em.adapter.MenuItemAdapter;
 import com.em.base.BaseActivity;
 import com.em.config.SpCateConstant;
 import com.em.config.URLConfig;
 import com.em.goods_details.GoodsDetailsActivity;
 import com.em.pojo.Commodity;
+import com.em.search.SearchActivity;
 import com.em.utils.NetWorkUtil;
 
 import org.json.JSONArray;
@@ -49,12 +50,14 @@ public class MenuItemContentActivity extends BaseActivity<MenuItemContentPresent
     private LinearLayoutManager manager;
     private MenuItemAdapter adapter;
     private LinearLayout layoutBG;
+    private ImageView menuItemSearch;
 
     @Override
     public void initView() {
         menuItemTitle = findViewById(R.id.home_frg_menu_title);
         menuItemDataList = findViewById(R.id.home_frg_menu_data_list);
         layoutBG = findViewById(R.id.menu_content_bg);
+        menuItemSearch = findViewById(R.id.menu_item_search);
     }
 
     @Override
@@ -82,8 +85,8 @@ public class MenuItemContentActivity extends BaseActivity<MenuItemContentPresent
             menuItemTitle.setText("眼科专区");
         }else if (SpCateConstant.JJZQ == tite){
             menuItemTitle.setText("急救专区");
-        }else if(SpCateConstant.SYZQ == tite){
-            menuItemTitle.setText("兽用专区");
+        }else if(SpCateConstant.JD == tite){
+            menuItemTitle.setText("京东大卖场");
         }else if (SpCateConstant.SYS == tite){
             menuItemTitle.setText("实验室");
         }else {
@@ -96,7 +99,7 @@ public class MenuItemContentActivity extends BaseActivity<MenuItemContentPresent
 
     @Override
     public void initListener() {
-
+        menuItemSearch.setOnClickListener(this);
     }
 
     @Override
@@ -143,6 +146,14 @@ public class MenuItemContentActivity extends BaseActivity<MenuItemContentPresent
     @Override
     public void onClick(View v) {
 
+        switch (v.getId()){
+
+            //跳转到搜索页面
+            case R.id.menu_item_search:
+                Intent suosou = new Intent(context, SearchActivity.class);
+                startActivity(suosou);
+                break;
+        }
     }
 
     //向服务器请求数据发送到Handler中

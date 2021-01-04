@@ -61,22 +61,13 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
 
     private static final String TAG = "LoginActivity";
     private Context context = LoginActivity.this;
-    private static final int LOGIN = 0x100;             //登录消息代码
-    private boolean yanFlag = true;
-
     private LinearLayout yzmLogin,pwdLogin;
     private TextView yzmLoginText,pwdLoginText,yzmLoginXHX,pwdLoginXHX;
 
+    private VerificationCodeFragment verificationCodeFragment = null;
 
     @Override
     public void initView() {
-       /* accountName = findViewById(R.id.log_username);
-        password = findViewById(R.id.log_password);
-        loginBtn = findViewById(R.id.log_button);
-        passwordWJ = findViewById(R.id.log_wjpwd);
-        register = findViewById(R.id.log_register);
-        testUpdate = findViewById(R.id.test_update);
-        yanJingState = findViewById(R.id.yanjian_state);*/
 
        yzmLogin = findViewById(R.id.yzm_login);
        pwdLogin = findViewById(R.id.pwd_login);
@@ -86,8 +77,6 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
 
        yzmLoginXHX = findViewById(R.id.yzm_login_xhx);
        pwdLoginXHX = findViewById(R.id.pwd_login_xhx);
-
-
     }
 
     @Override
@@ -100,42 +89,26 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
 
         LoginSelectMenu.selectMenu(pwdLoginText,pwdLoginXHX,yzmLoginText,yzmLoginXHX,LoginSelectMenu.YZM_LOGIN);
 
-        replaceFragment(new VerificationCodeFragment());
-        /*String str1 = "<font color= \"#FFC2C2C2\">没有账户？</font><font color= \"#00cc66\">立即注册</font>";
-        register.setText(Html.fromHtml(str1));
-        //设置输入框密码样式
-        password.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
-        password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-        if (password.getText().length() == 0) {
-            password.setSelection(0);
-            password.requestFocus();
-        } else {
-            password.setSelection(password.getText().length());
-            password.requestFocus();
-        }*/
+        if(verificationCodeFragment != null){
+            replaceFragment(verificationCodeFragment);
+        }else {
+            replaceFragment(new VerificationCodeFragment());
+        }
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        System.out.println("注销1");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        System.out.println(5555);
     }
 
     @Override
     public void initListener() {
-        /*loginBtn.setOnClickListener(this);
-        passwordWJ.setOnClickListener(this);
-        register.setOnClickListener(this);
-        yanJingState.setOnClickListener(this);
-
-        testUpdate.setOnClickListener(this);*/
-
         pwdLogin.setOnClickListener(this);
         yzmLogin.setOnClickListener(this);
     }
@@ -146,9 +119,15 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
 
             case R.id.yzm_login:
                 LoginSelectMenu.selectMenu(pwdLoginText,pwdLoginXHX,yzmLoginText,yzmLoginXHX,LoginSelectMenu.YZM_LOGIN);
-                replaceFragment(new VerificationCodeFragment());
+
+                if(verificationCodeFragment != null){
+                    replaceFragment(verificationCodeFragment);
+                }else {
+                    replaceFragment(new VerificationCodeFragment());
+                }
                 break;
             case R.id.pwd_login:
+               // new VerificationCodeFragment(context).destroy();
                 LoginSelectMenu.selectMenu(pwdLoginText,pwdLoginXHX,yzmLoginText,yzmLoginXHX,LoginSelectMenu.PWD_LOGIN);
                 replaceFragment(new PasswordFragment());
                 break;
@@ -278,7 +257,7 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
             @Override
             public void run() {
                 super.run();
-                String res = NetWorkUtil.requestLoginPost(URLConfig.LoginURL, user);
+                String res = NetWorkUtil.requestLoginPost(URLConfig.PasswordLoginURL, user);
                 //新建一个Message作为传送消息的载体
                 Message message = new Message();
                 //消息代码
@@ -356,23 +335,4 @@ public class LoginActivity extends BaseActivity<LoginPersenter> implements ILogi
         return new LoginPersenter();
     }
 
-
-   /* //倒计时发送验证码
-    CountDownTimer loginRequest = new CountDownTimer(1 * 1000, 1000) {
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public void onTick(long millisUntilFinished) {
-            if (dataLoadDialog == null) {
-                dataLoadDialog = DataLoadDialog.createDialog(LoginActivity.this, R.drawable.spinner);
-            }
-            dataLoadDialog.setMessage("Loading···");
-            dataLoadDialog.show();
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public void onFinish() {
-            dataLoadDialog.dismiss();
-        }
-    };*/
 }

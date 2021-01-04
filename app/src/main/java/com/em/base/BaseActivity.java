@@ -25,11 +25,11 @@ public abstract class BaseActivity<P extends BasePersenter> extends AppCompatAct
         MultiDex.install(this);
         setContentView(getContextViewId());
 
-
         initView();
         initListener();
         initData();
         this.mPersenter = getmPersenterInstance();
+
     }
 
     //初始化view

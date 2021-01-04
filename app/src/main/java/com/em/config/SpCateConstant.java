@@ -19,10 +19,12 @@ public class SpCateConstant {
     public static final Integer YKZQ = 180;
     //实验室
     public static final Integer SYS = 179;
-    //兽用专区
-    public static final Integer SYZQ = 174;
+    //京东大卖场
+    public static final Integer JD = 211;
     //急救专区
     public static final Integer JJZQ = 128;
+
+
 
     public static final Integer ToDay =0x00;
     public static final Integer YestDay = 0x01;

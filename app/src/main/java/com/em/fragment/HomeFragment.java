@@ -32,6 +32,7 @@ import com.em.dialog.APPUpdateTiShiDialog;
 import com.em.goods_details.GoodsDetailsActivity;
 import com.em.home_frg_menu.MenuItemContentActivity;
 import com.em.pojo.Commodity;
+import com.em.search.SearchActivity;
 import com.em.utils.GlideImageLoader;
 import com.em.utils.NetWorkUtil;
 import com.em.utils.SpUtils;
@@ -76,7 +77,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
         haocaiProduct = view.findViewById(R.id.home_frg_haocai_pr);
         yankeProduct = view.findViewById(R.id.home_frg_yanke_pr);
         jijiuProduct = view.findViewById(R.id.home_frg_jijiu_pr);
-        shouyongProduct = view.findViewById(R.id.home_frg_shouyong_pr);
+        shouyongProduct = view.findViewById(R.id.home_frg_jd_pr);
         shiyanshiProduct = view.findViewById(R.id.home_frg_shiyanshi_pr);
         homeSouSuo = view.findViewById(R.id.home_frg_sousuolan);
 
@@ -189,9 +190,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(jjProduct);
                 break;
 
-            case R.id.home_frg_shouyong_pr:
+            case R.id.home_frg_jd_pr:
                 Intent syProduct = new Intent(getContext(), MenuItemContentActivity.class);
-                syProduct.putExtra("tite", SpCateConstant.SYZQ);
+                syProduct.putExtra("tite", SpCateConstant.JD);
                 startActivity(syProduct);
                 break;
 
@@ -202,28 +203,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case R.id.home_frg_sousuolan:
-
-                final File file = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)));
-
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Bitmap bitmap = Picasso.with(getContext()).load(file).get();
-                            System.out.println(66666);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
+                Intent suosou = new Intent(getContext(), SearchActivity.class);
+                startActivity(suosou);
                 break;
         }
     }
 
     @Override
     public void destroy() {
+
     }
 
 
@@ -321,15 +309,17 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
                         SpUtils.putVersionInfo(getContext(), versionName);
 
-                        if (versionCode != null && !(versionName.equals("")) && !(versionName.equals("null"))) {
+                        if (versionName.length()>0) {
                             //当本地版本低于服务器版本时，系统更新
-                            if (SystemTools.getVersion(getContext()) < versionCode) {
+                            if (SystemTools.getVersionName(getContext()).equals(versionName)) {
+
+                                Log.d(TAG, "目前是最新版本");
+
+                            } else {
 
                                 APPUpdateTiShiDialog dialog = new APPUpdateTiShiDialog(getContext(), versionName);
                                 dialog.show();
 
-                            } else {
-                                Log.d(TAG, "目前是最新版本");
                             }
                         } else {
                             Log.d(TAG, "获取服务器版本为空");

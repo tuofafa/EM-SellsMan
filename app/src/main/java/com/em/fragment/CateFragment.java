@@ -1,9 +1,11 @@
 package com.em.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.em.R;
 import com.em.config.SpCateConstant;
+import com.em.search.SearchActivity;
 import com.em.utils.SelectMenu;
 
 /**
@@ -32,6 +35,7 @@ public class CateFragment extends Fragment implements View.OnClickListener {
     private TextView jijiuClick, jijiuXHXClick;
     private TextView shouyongClick, shouyongXHXClick;
     private TextView shiyanshiClick, shiyanshiXHXClick;
+    private ImageView cateSearch;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +82,8 @@ public class CateFragment extends Fragment implements View.OnClickListener {
 
         shiyanshiClick = v.findViewById(R.id.home_frg_menu_shiyanshi_click);
         shiyanshiXHXClick = v.findViewById(R.id.home_text_shiyanshi_xiahuaxian);
+
+        cateSearch = v.findViewById(R.id.cate_search);
     }
 
     public void initListen() {
@@ -90,6 +96,8 @@ public class CateFragment extends Fragment implements View.OnClickListener {
         jijiuClick.setOnClickListener(this);
         shouyongClick.setOnClickListener(this);
         shiyanshiClick.setOnClickListener(this);
+
+        cateSearch.setOnClickListener(this);
     }
 
     public void initData() {
@@ -162,7 +170,7 @@ public class CateFragment extends Fragment implements View.OnClickListener {
                 SelectMenu.selectMenu(allClick, allXHXClick, jiayongClick, jiayongXHXClick, fangyiClick, fangyiXHXClick, kouqiangClick, kouqiangXHXClick,
                         haocaiClick, haocaiXHXClick, yankeClick, yankeXHXClick, jijiuClick, jijiuXHXClick,
                         shouyongClick, shouyongXHXClick, shiyanshiClick, shiyanshiXHXClick, SelectMenu.SY_PRODUCT);
-                replaceFragment(new HPFragment(), SpCateConstant.SYZQ);
+                replaceFragment(new HPFragment(), SpCateConstant.JD);
                 break;
 
             case R.id.home_frg_menu_shiyanshi_click:
@@ -170,6 +178,11 @@ public class CateFragment extends Fragment implements View.OnClickListener {
                         haocaiClick, haocaiXHXClick, yankeClick, yankeXHXClick, jijiuClick, jijiuXHXClick,
                         shouyongClick, shouyongXHXClick, shiyanshiClick, shiyanshiXHXClick, SelectMenu.SYS_PRODUCT);
                 replaceFragment(new HPFragment(), SpCateConstant.SYS);
+                break;
+
+            case R.id.cate_search:
+                Intent suosou = new Intent(getContext(), SearchActivity.class);
+                startActivity(suosou);
                 break;
         }
     }

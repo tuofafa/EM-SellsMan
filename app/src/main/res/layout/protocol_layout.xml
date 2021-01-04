@@ -6,14 +6,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/dp_10">
-        <TextView
+        android:layout_margin="@dimen/dp_10"
+        android:scrollbars="none">
+        <WebView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/protoocl"
-            android:scrollbars="vertical"
-            android:singleLine="false"
-            android:text="@string/protocol"/>
+            android:id="@+id/protocol"/>
     </ScrollView>
 
 

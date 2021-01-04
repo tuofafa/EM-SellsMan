@@ -234,7 +234,7 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
                 destroy();
                 break;
             case R.id.edit_phone:           //编辑手机号
-                Intent phone = new Intent(PersonInfoActivity.this, ModifyPersonActivity.class);
+                /*Intent phone = new Intent(PersonInfoActivity.this, ModifyPersonActivity.class);
                 phone.putExtra("title","修改手机号");
                 phone.putExtra("tishi","请输入手机号");
                 String phoneNum = setPhone.getText().toString();
@@ -243,7 +243,8 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
                 }
                 phone.putExtra("info",phoneNum);
                 startActivity(phone);
-                destroy();
+                destroy();*/
+                Common.showToast(PersonInfoActivity.this,"暂不支持修改手机号");
                 break;
             case R.id.edit_weChat:          //编辑微信号
                 Intent weChat = new Intent(PersonInfoActivity.this, ModifyPersonActivity.class);
@@ -272,7 +273,7 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoPersent> implemen
                         .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
                         .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
                         .previewImage(true)// 是否可预览图片 true or false
-                        .isCamera(true)// 是否显示拍照按钮 true or false
+                        .isCamera(false)// 是否显示拍照按钮 true or false
                         .imageFormat(PictureMimeType.JPEG)// 拍照保存图片格式后缀,默认jpeg
                         .isZoomAnim(false)// 图片列表点击 缩放效果 默认true
                         .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填
